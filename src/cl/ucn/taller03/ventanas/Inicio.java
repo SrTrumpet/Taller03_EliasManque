@@ -1,8 +1,5 @@
 package cl.ucn.taller03.ventanas;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -14,23 +11,26 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Color;
 import javax.swing.JButton;
-import javax.swing.ImageIcon;
 
+@SuppressWarnings("serial")
 public class Inicio extends JFrame implements ActionListener {
 
 	private JPanel contentPane;
 
 	private JButton salir, simulacion, victoriasPorLaHumanidad, robotPorEquipo, mostrarRobotPiloto, mostrarEstadisticas,
 			cambiarPiezaRobot, ensamblarRobot, opcionaAddPieza;
+	
+	
 
 	/**
 	 * Create the frame.
 	 */
 	public Inicio() {
+
 		setOpacity(1.0f);
 		setForeground(Color.LIGHT_GRAY);
 		setIconImage(Toolkit.getDefaultToolkit()
-				.getImage("D:\\Program\\eclipse\\Taller03_EliasManque\\src\\cl\\ucn\\taller03\\img\\iconVentana.jpg"));
+				.getImage("D:\\Program\\eclipse\\Taller03_EliasManque\\src\\cl\\ucn\\taller03\\img\\iconBarra.jpg"));
 		setTitle("Menu de Opciones");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 685, 427);
@@ -60,12 +60,14 @@ public class Inicio extends JFrame implements ActionListener {
 		opcionaAddPieza = new JButton("Añadir Pieza");
 		opcionaAddPieza.setFont(new Font("Tahoma", Font.BOLD, 14));
 		opcionaAddPieza.setBounds(75, 112, 218, 32);
+		opcionaAddPieza.addActionListener(this);
 		contentPane.add(opcionaAddPieza);
 
 		// Se define con las piezas disponibles un nuevo robot
 		ensamblarRobot = new JButton("Ensamblar Robot");
 		ensamblarRobot.setFont(new Font("Tahoma", Font.BOLD, 14));
 		ensamblarRobot.setBounds(361, 112, 218, 32);
+		ensamblarRobot.addActionListener(this);
 		contentPane.add(ensamblarRobot);
 
 		// Con el nombre de un robot se accede a su lista de piezas para poder cambiar
@@ -73,18 +75,21 @@ public class Inicio extends JFrame implements ActionListener {
 		cambiarPiezaRobot = new JButton("Cambiar pieza");
 		cambiarPiezaRobot.setFont(new Font("Tahoma", Font.BOLD, 14));
 		cambiarPiezaRobot.setBounds(75, 179, 218, 32);
+		cambiarPiezaRobot.addActionListener(this);
 		contentPane.add(cambiarPiezaRobot);
 
 		// Muestra las estadisticas de los robot en general
 		mostrarEstadisticas = new JButton("Mostrar Estadisticas");
 		mostrarEstadisticas.setFont(new Font("Tahoma", Font.BOLD, 14));
 		mostrarEstadisticas.setBounds(361, 179, 218, 32);
+		mostrarEstadisticas.addActionListener(this);
 		contentPane.add(mostrarEstadisticas);
 
 		//
 		mostrarRobotPiloto = new JButton("Buscar piloto y su Robot");
 		mostrarRobotPiloto.setFont(new Font("Tahoma", Font.BOLD, 14));
 		mostrarRobotPiloto.setBounds(75, 247, 218, 32);
+		mostrarRobotPiloto.addActionListener(this);
 		contentPane.add(mostrarRobotPiloto);
 
 		// Se ingresa el nombre del equipo y se muestra por pantalla los robot que estan
@@ -92,17 +97,20 @@ public class Inicio extends JFrame implements ActionListener {
 		robotPorEquipo = new JButton("Buscar robot por Equipo");
 		robotPorEquipo.setFont(new Font("Tahoma", Font.BOLD, 14));
 		robotPorEquipo.setBounds(361, 247, 218, 32);
+		robotPorEquipo.addActionListener(this);
 		contentPane.add(robotPorEquipo);
 
 		victoriasPorLaHumanidad = new JButton("%Victorias");
 		victoriasPorLaHumanidad.setFont(new Font("Tahoma", Font.BOLD, 14));
 		victoriasPorLaHumanidad.setBounds(216, 315, 218, 32);
+		victoriasPorLaHumanidad.addActionListener(this);
 		contentPane.add(victoriasPorLaHumanidad);
 
 		simulacion = new JButton("Iniciar Simulacion");
 		simulacion.setBackground(Color.LIGHT_GRAY);
 		simulacion.setFont(new Font("Tahoma", Font.BOLD, 18));
 		simulacion.setBounds(157, 33, 326, 53);
+		simulacion.addActionListener(this);
 		contentPane.add(simulacion);
 
 		// Guardara todos los datos en un txt
@@ -111,6 +119,7 @@ public class Inicio extends JFrame implements ActionListener {
 		salir.setForeground(Color.DARK_GRAY);
 		salir.setFont(new Font("Tahoma", Font.BOLD, 14));
 		salir.setBounds(510, 350, 153, 32);
+		salir.addActionListener(this);
 		contentPane.add(salir);
 
 	}
@@ -119,7 +128,7 @@ public class Inicio extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 
 		if (salir == e.getSource()) {
-
+			this.dispose();
 		}
 		if (simulacion == e.getSource()) {
 
@@ -143,7 +152,8 @@ public class Inicio extends JFrame implements ActionListener {
 			
 		}
 		if(opcionaAddPieza == e.getSource()) {
-			
+			CrearPieza addPiezas = new CrearPieza();
+			addPiezas.setVisible(true);
 		}
 
 	}
