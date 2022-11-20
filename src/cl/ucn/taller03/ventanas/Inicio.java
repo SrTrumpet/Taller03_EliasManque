@@ -3,6 +3,9 @@ package cl.ucn.taller03.ventanas;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import cl.ucn.taller03.logica.Sistema;
+
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
@@ -16,7 +19,8 @@ import javax.swing.JButton;
 public class Inicio extends JFrame implements ActionListener {
 
 	private JPanel contentPane;
-
+	private Sistema sist;
+	
 	private JButton salir, simulacion, victoriasPorLaHumanidad, robotPorEquipo, mostrarRobotPiloto, mostrarEstadisticas,
 			cambiarPiezaRobot, ensamblarRobot, opcionaAddPieza;
 	
@@ -25,8 +29,9 @@ public class Inicio extends JFrame implements ActionListener {
 	/**
 	 * Create the frame.
 	 */
-	public Inicio() {
+	public Inicio(Sistema sist) {
 
+		this.sist = sist;
 		setOpacity(1.0f);
 		setForeground(Color.LIGHT_GRAY);
 		setIconImage(Toolkit.getDefaultToolkit()
@@ -152,7 +157,7 @@ public class Inicio extends JFrame implements ActionListener {
 			
 		}
 		if(opcionaAddPieza == e.getSource()) {
-			CrearPieza addPiezas = new CrearPieza();
+			CrearPieza addPiezas = new CrearPieza(sist);
 			addPiezas.setVisible(true);
 		}
 

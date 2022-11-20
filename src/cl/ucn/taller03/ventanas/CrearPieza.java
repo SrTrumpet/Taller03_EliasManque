@@ -5,8 +5,6 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import cl.ucn.taller03.logica.Sistema;
-import cl.ucn.taller03.logica.SistemaRobot;
-
 import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.Toolkit;
@@ -55,9 +53,10 @@ public class CrearPieza extends JFrame implements ActionListener, ItemListener {
 
 	/**
 	 * Create the frame.
+	 * @param sist 
 	 */
-	public CrearPieza() {
-		sist = new SistemaRobot();
+	public CrearPieza(Sistema sist) {
+		this.sist = sist;
 
 		setIconImage(Toolkit.getDefaultToolkit()
 				.getImage("D:\\Program\\eclipse\\Taller03_EliasManque\\src\\cl\\ucn\\taller03\\img\\iconVentana.jpg"));
@@ -210,49 +209,97 @@ public class CrearPieza extends JFrame implements ActionListener, ItemListener {
 		contentPane.add(choiceTipoPieza);
 	}
 
-	
 	private boolean verificarNombreDato() {
 		return texNombre.getText().equals("") || textDatoExtra.getText().equals("");
 	}
+
+	
 	
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
+		//TODAS LAS PIEZAS TIENE EN COMUN SU NOMBRE AL IGUAL QUE LAS ARMAS
 		String lineaString = texNombre.getText();
-		
+
+		// BOTON ATRAS
 		if (btnAtras == e.getSource()) {
 			dispose();
 		}
 
-		//ACCION DEL BOTON GUARDAR
+		// ACCION DEL BOTON GUARDAR
 		if (btnGuardar == e.getSource()) {
-
 			String tipo = choiceTipoPieza.getSelectedItem().toLowerCase();
 
+			
+			//GUARDAR UN ARMA
 			if (tipo.equals("arma")) {
 				String daño = textDaño.getText();
 				String ataqueVelocidad = textVelocidadAtaque.getText();
-				
-				if(texNombre.getText().equals("")) {
+
+				if (texNombre.getText().equals("")) {
 					lblError.setEnabled(true);
 					lblCheck.setEnabled(false);
-				}else {
+				} else {
 					lineaString += ("," + daño + "," + ataqueVelocidad);
 					lblCheck.setEnabled(true);
 					lblError.setEnabled(false);
 					sist.guardarPieza(lineaString);
 				}
 
-			}else if(verificarNombreDato()) {
-				lblCheck.setEnabled(false);
-				lblError.setEnabled(true);
+				//GUARDAR UNAS PIERNAS
+			}else if(tipo.equals("piernas")) {
+				
+				//Nombre
+				String rareza = generarRareza(choiceRareza.getSelectedItem());
+				String tipoPieza = "P";
+				int velocidad = Integer.parseInt(textDatoExtra.getText());
+				
+				lineaString += (","+rareza+","+tipoPieza+","+velocidad);
+				
+				sist.guardarPieza(lineaString);
+				
+				//GUARDA UNOS BRAZOS
+			}else if(tipo.equals("brazo")) {
+				
+				//nombre
+				String rareza = generarRareza(choiceRareza.getSelectedItem());
+				String tipoPieza = "B";
+				int ataque = Integer.parseInt(textDatoExtra.getText());
+				
+				lineaString += (","+rareza+","+tipoPieza+","+ataque);
+				
+				sist.guardarPieza(lineaString);
 			}
 			
+			
+			
+			
+			if (verificarNombreDato()) {
+				lblCheck.setEnabled(false);
+				lblError.setEnabled(true);
+			}else {
+				lblError.setEnabled(false);
+				lblCheck.setEnabled(true);
+			}
 
+			lineaString = "";
 		}
+		
+		
+		
 	}
 
+	private String generarRareza(String tipoRareza) {
+		if(tipoRareza.equals("Pieza Premium")) {
+			return "PP";
+		}else if(tipoRareza.equals("Pieza Estandar")) {
+			return "PE";
+		}else {
+			return "PC";
+		}
+	}
+	
 	/***
 	 * Cambia el estado de la ventana
 	 * 

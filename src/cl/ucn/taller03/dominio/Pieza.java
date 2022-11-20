@@ -5,9 +5,15 @@ public class Pieza {
 	private String nombre;
 	private int vidaBase;
 	private String rareza;
+	private int ataqueExtra;
 
 	public Pieza(String nombre) {
 		this.nombre = nombre;
+		this.vidaBase = 2000;
+	}
+
+	public void añadirMasVidaBase(int vidaExtra) {
+		this.vidaBase += vidaExtra;
 	}
 
 	public String getNombre() {
@@ -34,4 +40,19 @@ public class Pieza {
 		this.rareza = rareza;
 	}
 
+	public int getAtaqueExtra() {
+		return ataqueExtra;
+	}
+
+	public void setAtaqueExtra(int ataqueExtra) {
+		this.ataqueExtra = ataqueExtra;
+	}
+
+	@Override
+	public String toString() {
+		return "Pieza [nombre=" + nombre + ", vidaBase=" + vidaBase + ", rareza=" + rareza + ", ataqueExtra="
+				+ ataqueExtra + "]";
+	}
+
+	
 }
