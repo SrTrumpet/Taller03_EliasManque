@@ -155,7 +155,8 @@ public class Inicio extends JFrame implements ActionListener {
 			
 		}
 		if(ensamblarRobot == e.getSource()) {
-			
+			EnsamblarRobot ensamblar = new EnsamblarRobot(sist);
+			ensamblar.setVisible(true);
 		}
 		if(opcionaAddPieza == e.getSource()) {
 			CrearPieza addPiezas = new CrearPieza(sist);
