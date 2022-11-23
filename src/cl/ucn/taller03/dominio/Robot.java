@@ -38,6 +38,13 @@ public class Robot {
 	public void setLista(ListaPiezas lista) {
 		this.lista = lista;
 	}
+
+
+
+	@Override
+	public String toString() {
+		return "Robot [nombre=" + nombre + ", estadisticas=" + estadisticas + ", lista=" + lista.toString() + "]";
+	}
 	
 	
 	

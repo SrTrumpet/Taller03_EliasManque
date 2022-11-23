@@ -12,7 +12,6 @@ import cl.ucn.taller03.dominio.Pieza;
 import cl.ucn.taller03.dominio.Piloto;
 import cl.ucn.taller03.dominio.Robot;
 import cl.ucn.taller03.dominio.RobotAlien;
-import cl.ucn.taller03.dominio.RobotHumano;
 import cl.ucn.taller03.dominio.Torax;
 import cl.ucn.taller03.ventanas.Inicio;
 
@@ -27,7 +26,9 @@ public class SistemaRobot implements Sistema {
 
 	public SistemaRobot() {
 		listaPiezas = new ArrayList<Pieza>();
-
+		listaRobots = new ArrayList<Robot>();
+		listaPilotos = new ArrayList<Piloto>();
+		listaEquipos = new ArrayList<Equipo>();
 	}
 
 	@Override
@@ -122,7 +123,7 @@ public class SistemaRobot implements Sistema {
 				nuevaCabeza.añadirMasVidaBase(vidaExtra);
 				nuevaCabeza.setRareza(rareza);
 				nuevaCabeza.setAtaqueExtra(dañoExtra);
-				
+
 				listaPiezas.add(nuevaCabeza);
 			}
 		}
@@ -168,82 +169,132 @@ public class SistemaRobot implements Sistema {
 
 	@Override
 	public void guardarRobot(String linea) {
-		
+
 		String[] datos = linea.split(",");
-		
+
 		String nombreRobot = datos[0];
+		String tipoRobot = datos[6];
 		
-		
-		//Se crean al piloto y al Equipo a la vez
-		
-		
-		
-		
-		
-		
-		for(int i = 1; i < 6; i++) {
-			String buscarPieza = datos[i];
-			Pieza encontrada = buscarPiezas(buscarPieza);
-			if(verificarNull(encontrada)) {
-				
+		// Se crean al piloto y al Equipo a la vez
+
+		if(tipoRobot.equals("A")) {
+			
+			String claseRobot = datos[7];
+			int[] powerUp = puntosExtrasVidaDaño(claseRobot);
+			
+			if(verificarRobot(nombreRobot) == null) {
+				Robot nuevo = new RobotAlien(nombreRobot, claseRobot,powerUp[0],powerUp[1]);
+				designarPiezasRobot(nuevo, datos);
+				listaRobots.add(nuevo);
 			}
 		}
+
+		
+		
+		
+		System.out.println(listaRobots.toString());
+		
+		
+		
+		
+		
 	}
-	
+
 	private Pieza buscarPiezas(String nombre) {
-		for(Pieza p: listaPiezas) {
-			if(p.getNombre().equals(nombre)) {
+		for (Pieza p : listaPiezas) {
+			if (p.getNombre().equals(nombre)) {
 				return p;
 			}
 		}
 		return null;
 	}
-	
+
 	private boolean verificarNull(Object o) {
 		return o != null;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	/**
-	private Robot crearRobot(String nombre, String tipo, String clase, Piloto piloto , Equipo equipo) {
-		Robot nuevo = null;
-		if(tipo.equals("A")) {
-			nuevo = new RobotAlien(nombre, clase);
-		}else if(tipo.equals("H")) {
-			nuevo = new RobotHumano(nombre, piloto, equipo);
-		}
-		return nuevo;
+	private Robot verificarRobot(String nombre) {
+		for(Robot r: listaRobots) {
+			if(r.getNombre().equals(nombre)) {
+				return r;
+			}
+		}return null;
 	}
-	**/
 	
 	
+	//PUNTOS EXTRAS POR CLASE DE ROBOT ALIEN
 	
-	
-	
-	/**
-	private Piloto registrarPiloto(String nombre) {
+	private int[] puntosExtrasVidaDaño(String clase) {
 		
+		int[] powerUp = new int[2];
+		
+		if(clase.equals("SS+")) {
+			powerUp[0] = 5000;
+			powerUp[1] = 500;
+		}else if(clase.equals("S+")) {
+			powerUp[0] = 3000;
+			powerUp[1] = 400;
+		}else if(clase.equals("S")) {
+			powerUp[0] = 2000;
+			powerUp[1] = 300;
+		}else if (clase.equals("A")) {
+			powerUp[0] = 1000;
+			powerUp[1] = 200;
+		}else if (clase.equals("B")) {
+			powerUp[0] = 500;
+			powerUp[1] = 100;
+		}
+		
+		return powerUp;
 	}
-	private boolean verificarPilotoExiste(String piloto) {
-		for(Piloto p: listaPilotos) {
-			if(p.getPiloto().equals(piloto)) {
+	
+	//METODO QUE CREA UN ROBOT
+	
+	
+
+	// METODO QUE RECIBA A UN ROBOT Y LE DESIGNE LAS PIEZAS
+
+	private void designarPiezasRobot(Robot robot, String[] datos) {
+		for (int i = 1; i < 6; i++) {
+			String buscarPieza = datos[i];
+			Pieza encontrada = buscarPiezas(buscarPieza);
+			if (verificarNull(encontrada)) {
+				if (!verificarUsoPieza(encontrada)) {
+					robot.getLista().agregarPieza(encontrada);
+				}
+			}
+		}
+	}
+
+	// METODO QUE RECORRE TODAS LAS LISTAS DE ROBOT Y SU LISTA INTERNA POR SI
+	// ENCUENTRA LA PIEZA Y VERIFICAR SI ESTA EN USO O NO
+
+	private boolean verificarUsoPieza(Pieza p) {
+		for (Robot r : listaRobots) {
+			if (r.getLista().verificarExiste(p)) {
 				return true;
 			}
 		}
 		return false;
 	}
-	**/
+
+	// CREAR UN METODO QUE DIGA SI EXISTE EL PILOTO Y DEVUELVA SU REFERENCIA
+	// CREAR OTRO METODO QUE RECIBA ESE PILOTO Y VERIFIQUE SI TIENO O NO DESIGNADO
+	// UN ROBOT EN EL CASO DE QUE NO LO TENGA SE LE DESIGNA EL ROBOT RECIEN CREADO
+
+	/**
+	 * private Robot crearRobot(String nombre, String tipo, String clase, Piloto
+	 * piloto , Equipo equipo) { Robot nuevo = null; if(tipo.equals("A")) { nuevo =
+	 * new RobotAlien(nombre, clase); }else if(tipo.equals("H")) { nuevo = new
+	 * RobotHumano(nombre, piloto, equipo); } return nuevo; }
+	 **/
+
+	/**
+	 * private Piloto registrarPiloto(String nombre) {
+	 * 
+	 * } private boolean verificarPilotoExiste(String piloto) { for(Piloto p:
+	 * listaPilotos) { if(p.getPiloto().equals(piloto)) { return true; } } return
+	 * false; }
+	 **/
 
 }
