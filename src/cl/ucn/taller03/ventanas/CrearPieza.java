@@ -53,7 +53,8 @@ public class CrearPieza extends JFrame implements ActionListener, ItemListener {
 
 	/**
 	 * Create the frame.
-	 * @param sist 
+	 * 
+	 * @param sist
 	 */
 	public CrearPieza(Sistema sist) {
 		this.sist = sist;
@@ -213,26 +214,27 @@ public class CrearPieza extends JFrame implements ActionListener, ItemListener {
 		return texNombre.getText().equals("") || textDatoExtra.getText().equals("");
 	}
 
-	
-	
-	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-		//TODAS LAS PIEZAS TIENE EN COMUN SU NOMBRE AL IGUAL QUE LAS ARMAS
+		// TODAS LAS PIEZAS TIENE EN COMUN SU NOMBRE AL IGUAL QUE LAS ARMAS
 		String lineaString = texNombre.getText();
 
 		// BOTON ATRAS
 		if (btnAtras == e.getSource()) {
 			dispose();
 		}
+		
+		if (verificarNombreDato()) {
+			lblCheck.setEnabled(false);
+			lblError.setEnabled(true);
+		} 
 
 		// ACCION DEL BOTON GUARDAR
 		if (btnGuardar == e.getSource()) {
 			String tipo = choiceTipoPieza.getSelectedItem().toLowerCase();
 
-			
-			//GUARDAR UN ARMA
+			// GUARDAR UN ARMA
 			if (tipo.equals("arma")) {
 				String daño = textDaño.getText();
 				String ataqueVelocidad = textVelocidadAtaque.getText();
@@ -247,59 +249,79 @@ public class CrearPieza extends JFrame implements ActionListener, ItemListener {
 					sist.guardarPieza(lineaString);
 				}
 
-				//GUARDAR UNAS PIERNAS
-			}else if(tipo.equals("piernas")) {
-				
-				//Nombre
+				// GUARDAR UNAS PIERNAS
+			} else if (tipo.equals("piernas")) {
+
+				// Nombre
 				String rareza = generarRareza(choiceRareza.getSelectedItem());
 				String tipoPieza = "P";
 				int velocidad = Integer.parseInt(textDatoExtra.getText());
-				
-				lineaString += (","+rareza+","+tipoPieza+","+velocidad);
-				
+
+				lineaString += ("," + rareza + "," + tipoPieza + "," + velocidad);
+
 				sist.guardarPieza(lineaString);
-				
-				//GUARDA UNOS BRAZOS
-			}else if(tipo.equals("brazo")) {
-				
-				//nombre
+
+				// GUARDA UNOS BRAZOS
+			} else if (tipo.equals("brazo")) {
+
+				// nombre
 				String rareza = generarRareza(choiceRareza.getSelectedItem());
 				String tipoPieza = "B";
 				int ataque = Integer.parseInt(textDatoExtra.getText());
-				
-				lineaString += (","+rareza+","+tipoPieza+","+ataque);
-				
+
+				lineaString += ("," + rareza + "," + tipoPieza + "," + ataque);
+
 				sist.guardarPieza(lineaString);
-			}
+
+				// GUARDA UNA CABEZA
+			} else if (tipo.equals("torax")) {
+
+				// nombre
+				String rareza = generarRareza(choiceRareza.getSelectedItem());
+				String tipoPieza = "T";
+				int vida = Integer.parseInt(textDatoExtra.getText());
+
+				lineaString += ("," + rareza + "," + tipoPieza + "," + vida);
+
+				sist.guardarPieza(lineaString);
+
+			} else if (tipo.equals("C")) {
+
+				// nombre
+				String rareza = generarRareza(choiceRareza.getSelectedItem());
+				String tipoPieza = "C";
+
+				String[] datosNuevos = textDatoExtra.getText().split(",");
+				int velocidad = Integer.parseInt(datosNuevos[0]);
+				int vida = Integer.parseInt(datosNuevos[1]);
+
+				lineaString += ("," + rareza + "," + tipoPieza + "," + velocidad + "," + vida);
+
+				sist.guardarPieza(lineaString);
+			} 
 			
-			
-			
-			
-			if (verificarNombreDato()) {
-				lblCheck.setEnabled(false);
-				lblError.setEnabled(true);
-			}else {
+			if(!verificarNombreDato()) {
 				lblError.setEnabled(false);
 				lblCheck.setEnabled(true);
 			}
 
+			
+
 			lineaString = "";
 		}
-		
-		
-		
+
 	}
 
 	private String generarRareza(String tipoRareza) {
-		if(tipoRareza.equals("Pieza Premium")) {
+		if (tipoRareza.equals("Pieza Premium")) {
 			return "PP";
-		}else if(tipoRareza.equals("Pieza Estandar")) {
+		} else if (tipoRareza.equals("Pieza Estandar")) {
 			return "PE";
-		}else {
+		} else {
 			return "PC";
 		}
 	}
-	
+
 	/***
 	 * Cambia el estado de la ventana
 	 * 
@@ -313,6 +335,7 @@ public class CrearPieza extends JFrame implements ActionListener, ItemListener {
 
 		if (choiceTipoPieza == e.getSource()) {
 			if (tipo.equals("arma")) {
+				lblRareza.setText("No Disponible");
 				lblDatoEredado.setText("No Disponible");
 				textDatoExtra.setEnabled(false);
 				choiceRareza.setEnabled(false);
@@ -327,28 +350,37 @@ public class CrearPieza extends JFrame implements ActionListener, ItemListener {
 		}
 
 		if (choiceTipoPieza == e.getSource()) {
+			textDatoExtra.setText("");
 			if (tipo.equals("brazo")) {
 				lblDatoEredado.setText("Ataque");
-			}
-		}
-
-		if (choiceTipoPieza == e.getSource()) {
-			if (tipo.equals("piernas")) {
+				lblRareza.setText("Rareza");
+			} 
+			else if (tipo.equals("piernas")) {
 				lblDatoEredado.setText("Velocidad");
-			}
-		}
-
-		if (choiceTipoPieza == e.getSource()) {
-			if (tipo.equals("torax")) {
+				lblRareza.setText("Rareza");
+			} 
+			else if (tipo.equals("torax")) {
 				lblDatoEredado.setText("Vida");
+				lblRareza.setText("Rareza");
+			}
+			else if (tipo.equals("cabeza")) {
+				lblRareza.setText("Rareza");
+				lblDatoEredado.setText("Velocidad y Vida");
+				textDatoExtra.setText("dato1,dato2");
 			}
 		}
 
-		if (choiceTipoPieza == e.getSource()) {
-			if (tipo.equals("cabeza")) {
-				lblDatoEredado.setText("Velocidad y Vida");
-			}
-		}
+		// Codigo basura
+		/**
+		 * if (choiceTipoPieza == e.getSource()) { if (tipo.equals("piernas")) {
+		 * lblDatoEredado.setText("Velocidad"); } }
+		 * 
+		 * if (choiceTipoPieza == e.getSource()) { if (tipo.equals("torax")) {
+		 * lblDatoEredado.setText("Vida"); } }
+		 * 
+		 * if (choiceTipoPieza == e.getSource()) { if (tipo.equals("cabeza")) {
+		 * lblDatoEredado.setText("Velocidad y Vida"); } }
+		 **/
 
 	}
 

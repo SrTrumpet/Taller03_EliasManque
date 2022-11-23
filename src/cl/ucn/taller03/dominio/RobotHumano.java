@@ -2,30 +2,31 @@ package cl.ucn.taller03.dominio;
 
 public class RobotHumano extends Robot{
 	
-	private String nombrePiloto;
-	private String equipoMantencion;
+	private Piloto nombrePiloto;
+	private Equipo equipoMantencion;
 	
-	public RobotHumano(String nombre, String nombrePiloto, String equipoMantencion) {
+	
+	public RobotHumano(String nombre, Piloto nombrePiloto, Equipo equipoMantencion) {
 		super(nombre);
 		this.nombrePiloto = nombrePiloto;
 		this.equipoMantencion = equipoMantencion;
 	}
-
-	public String getNombrePiloto() {
+	
+	
+	public Piloto getNombrePiloto() {
 		return nombrePiloto;
 	}
-
-	public void setNombrePiloto(String nombrePiloto) {
+	public void setNombrePiloto(Piloto nombrePiloto) {
 		this.nombrePiloto = nombrePiloto;
 	}
-
-	public String getEquipoMantencion() {
+	public Equipo getEquipoMantencion() {
 		return equipoMantencion;
 	}
-
-	public void setEquipoMantencion(String equipoMantencion) {
+	public void setEquipoMantencion(Equipo equipoMantencion) {
 		this.equipoMantencion = equipoMantencion;
 	}
+	
+	
 	
 	
 

@@ -24,6 +24,13 @@ public class App {
 			String linea = leer.nextLine();
 			sist.guardarPieza(linea);
 		}
+		
+		leer = new Scanner(new File("src\\cl\\ucn\\taller03\\txt\\piezas.txt"));
+		
+		while(leer.hasNextLine()) {
+			String linea = leer.nextLine();
+			sist.guardarRobot(linea);
+		}
 
 	}
 
