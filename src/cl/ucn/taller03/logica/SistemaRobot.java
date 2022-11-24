@@ -476,6 +476,39 @@ public class SistemaRobot implements Sistema {
 		return "No encontrado";
 	}
 
+	@Override
+	public void cambiarArma(String arma, String nombreRobot) {
+		
+		//Eliminar el arma de donde este en los robots
+		
+		Robot cambiar = null;
+		Pieza armaEncontrada = null;
+		
+		for(Robot r: listaRobots) {
+			if(r.getNombre().equalsIgnoreCase(nombreRobot)) {
+				cambiar = r;
+			}
+			for(int i = 0; i < r.getLista().getCantidad(); i++) {
+				if(r.getLista().getIndex(i) instanceof Arma) {
+					if(r.getLista().getIndex(i).getNombre().equalsIgnoreCase(arma)) {
+						armaEncontrada = r.getLista().getIndex(i);
+						r.getLista().eliminar(arma);
+						}
+					}
+				}
+		}
+		
+		for(int i = 0; i < cambiar.getLista().getCantidad();i++) {
+			if(cambiar.getLista().getIndex(i) instanceof Arma) {
+				String nombre = cambiar.getLista().getIndex(i).getNombre();
+				cambiar.getLista().eliminar(nombre);
+			}
+		}
+		
+		
+		cambiar.getLista().agregarPieza(armaEncontrada);
+	}
+
 	// CREAR UN METODO QUE DIGA SI EXISTE EL PILOTO Y DEVUELVA SU REFERENCIA
 	// CREAR OTRO METODO QUE RECIBA ESE PILOTO Y VERIFIQUE SI TIENO O NO DESIGNADO
 	// UN ROBOT EN EL CASO DE QUE NO LO TENGA SE LE DESIGNA EL ROBOT RECIEN CREADO

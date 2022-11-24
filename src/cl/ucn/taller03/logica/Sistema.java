@@ -10,6 +10,7 @@ public interface Sistema {
 	void guardarCombates(String linea);
 	String buscarNombreArma(String nombreArma);
 	String buscarRobot(String nombreRoboString);
+	void cambiarArma(String arma, String nombreRobot);
 	
 	
 	

@@ -122,11 +122,21 @@ public class CambiarArmas extends JFrame implements ActionListener{
 			lblArmaEnUso.setText(enUso);
 			lblRobotEncontrado.setText(buscarRobot);
 			
-			
-			
-			
-			
 		}if(btnCambiarArma == e.getSource()) {
+			
+			String arma = textNombreArma.getText();
+			String nombreRobot = textNombreRobot.getText();
+			
+			String enUso = sist.buscarNombreArma(arma);
+			String buscarRobot = sist.buscarRobot(nombreRobot);
+			
+			if(enUso.equalsIgnoreCase("disponible") || !enUso.equals("No encontrada")) {
+				if(!buscarRobot.equalsIgnoreCase("No encontrado")) {
+					sist.cambiarArma(arma,nombreRobot);
+				}
+			}
+			
+			
 			
 			
 		}if(btnAtras == e.getSource()) {
