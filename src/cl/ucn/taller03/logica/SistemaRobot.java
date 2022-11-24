@@ -30,6 +30,7 @@ public class SistemaRobot implements Sistema {
 		listaRobots = new ArrayList<Robot>();
 		listaPilotos = new ArrayList<Piloto>();
 		listaEquipos = new ArrayList<Equipo>();
+		registroCombates = new ArrayList<String>();
 	}
 
 	@Override
@@ -128,6 +129,7 @@ public class SistemaRobot implements Sistema {
 			}
 		}
 
+		////////////////////RECUERDA BORRAR ESTA PARTE
 		mostrarLista();
 		System.out.println("Tamaño = " + listaPiezas.size());
 	}
@@ -427,6 +429,51 @@ public class SistemaRobot implements Sistema {
 	@Override
 	public void guardarCombates(String linea) {
 		registroCombates.add(linea);
+	}
+
+	@Override
+	public String buscarNombreArma(String nombreArma) {
+
+		for (Robot r : listaRobots) {
+			for (int i = 0; i < r.getLista().getCantidad(); i++) {
+				Pieza buscar = r.getLista().getIndex(i);
+				if (buscar instanceof Arma) {
+					if (buscar.getNombre().equalsIgnoreCase(nombreArma)) {
+						return "Usada por: " + r.getNombre();
+					}
+				}
+			}
+		}
+
+		for (Pieza p : listaPiezas) {
+			if (p instanceof Arma) {
+				if (p.getNombre().equalsIgnoreCase(nombreArma)) {
+					return "Disponible";
+				}
+			}
+		}
+
+		return "No encontrada";
+	}
+
+	@Override
+	public String buscarRobot(String nombreRoboString) {
+
+		String arma = "Null";
+
+		for (Robot r : listaRobots) {
+			if (r.getNombre().equalsIgnoreCase(nombreRoboString)) {
+				for (int i = 0; i < r.getLista().getCantidad(); i++) {
+					Pieza buscar = r.getLista().getIndex(i);
+					if (buscar instanceof Arma) {
+						arma = buscar.getNombre();
+					}
+				}
+
+				return "Find- Arma Inst.: " + arma;
+			}
+		}
+		return "No encontrado";
 	}
 
 	// CREAR UN METODO QUE DIGA SI EXISTE EL PILOTO Y DEVUELVA SU REFERENCIA

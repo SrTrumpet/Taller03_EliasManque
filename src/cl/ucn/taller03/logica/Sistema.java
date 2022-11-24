@@ -8,6 +8,8 @@ public interface Sistema {
 	String bucarListaRobotsPorPiloto(String text);
 	String buscarListaRobotPorEquipo(String text);
 	void guardarCombates(String linea);
+	String buscarNombreArma(String nombreArma);
+	String buscarRobot(String nombreRoboString);
 	
 	
 	

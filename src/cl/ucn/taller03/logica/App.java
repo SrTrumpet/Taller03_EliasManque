@@ -25,6 +25,14 @@ public class App {
 			sist.guardarPieza(linea);
 		}
 		
+		leer = new Scanner(new File("src\\cl\\ucn\\taller03\\txt\\armas.txt"));
+		
+		while(leer.hasNextLine()) {
+			String linea = leer.nextLine();
+			sist.guardarPieza(linea);
+		}
+		
+		
 		leer = new Scanner(new File("src\\cl\\ucn\\taller03\\txt\\robots.txt"));
 		
 		while(leer.hasNextLine()) {
@@ -38,6 +46,8 @@ public class App {
 			String linea = leer.nextLine();
 			sist.guardarCombates(linea);
 		}
+		
+		
 
 	}
 

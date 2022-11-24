@@ -31,6 +31,10 @@ public class ListaPiezas {
 		}return false;
 	}
 	
+	public Pieza getIndex(int i) {
+		return lista[i];
+	}
+	
 	public int getMax() {
 		return max;
 	}

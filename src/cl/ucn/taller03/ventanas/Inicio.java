@@ -23,6 +23,7 @@ public class Inicio extends JFrame implements ActionListener {
 	
 	private JButton salir, simulacion, victoriasPorLaHumanidad, robotPorEquipo, mostrarRobotPiloto, mostrarEstadisticas,
 			cambiarPiezaRobot, ensamblarRobot, opcionaAddPieza;
+	private JButton btnCambiarArma;
 	
 	
 
@@ -64,14 +65,14 @@ public class Inicio extends JFrame implements ActionListener {
 		// Boton para crear un objeto pieza con las entradas que dará el usuario
 		opcionaAddPieza = new JButton("Añadir Pieza");
 		opcionaAddPieza.setFont(new Font("Tahoma", Font.BOLD, 14));
-		opcionaAddPieza.setBounds(75, 112, 218, 32);
+		opcionaAddPieza.setBounds(57, 112, 236, 32);
 		opcionaAddPieza.addActionListener(this);
 		contentPane.add(opcionaAddPieza);
 
 		// Se define con las piezas disponibles un nuevo robot
 		ensamblarRobot = new JButton("Ensamblar Robot");
 		ensamblarRobot.setFont(new Font("Tahoma", Font.BOLD, 14));
-		ensamblarRobot.setBounds(361, 112, 218, 32);
+		ensamblarRobot.setBounds(361, 112, 233, 32);
 		ensamblarRobot.addActionListener(this);
 		contentPane.add(ensamblarRobot);
 
@@ -79,21 +80,21 @@ public class Inicio extends JFrame implements ActionListener {
 		// alguna
 		cambiarPiezaRobot = new JButton("Cambiar pieza");
 		cambiarPiezaRobot.setFont(new Font("Tahoma", Font.BOLD, 14));
-		cambiarPiezaRobot.setBounds(75, 179, 218, 32);
+		cambiarPiezaRobot.setBounds(57, 179, 236, 32);
 		cambiarPiezaRobot.addActionListener(this);
 		contentPane.add(cambiarPiezaRobot);
 
 		// Muestra las estadisticas de los robot en general
 		mostrarEstadisticas = new JButton("Mostrar Estadisticas");
 		mostrarEstadisticas.setFont(new Font("Tahoma", Font.BOLD, 14));
-		mostrarEstadisticas.setBounds(361, 179, 218, 32);
+		mostrarEstadisticas.setBounds(361, 310, 233, 32);
 		mostrarEstadisticas.addActionListener(this);
 		contentPane.add(mostrarEstadisticas);
 
 		//
 		mostrarRobotPiloto = new JButton("Buscar piloto y sus Robots");
 		mostrarRobotPiloto.setFont(new Font("Tahoma", Font.BOLD, 14));
-		mostrarRobotPiloto.setBounds(75, 247, 218, 32);
+		mostrarRobotPiloto.setBounds(57, 247, 236, 32);
 		mostrarRobotPiloto.addActionListener(this);
 		contentPane.add(mostrarRobotPiloto);
 
@@ -101,13 +102,13 @@ public class Inicio extends JFrame implements ActionListener {
 		// vinculados a ese equipo
 		robotPorEquipo = new JButton("Buscar robot por Equipo");
 		robotPorEquipo.setFont(new Font("Tahoma", Font.BOLD, 14));
-		robotPorEquipo.setBounds(361, 247, 218, 32);
+		robotPorEquipo.setBounds(361, 247, 233, 32);
 		robotPorEquipo.addActionListener(this);
 		contentPane.add(robotPorEquipo);
 
 		victoriasPorLaHumanidad = new JButton("%Victorias");
 		victoriasPorLaHumanidad.setFont(new Font("Tahoma", Font.BOLD, 14));
-		victoriasPorLaHumanidad.setBounds(216, 315, 218, 32);
+		victoriasPorLaHumanidad.setBounds(57, 310, 236, 32);
 		victoriasPorLaHumanidad.addActionListener(this);
 		contentPane.add(victoriasPorLaHumanidad);
 
@@ -126,6 +127,12 @@ public class Inicio extends JFrame implements ActionListener {
 		salir.setBounds(510, 350, 153, 32);
 		salir.addActionListener(this);
 		contentPane.add(salir);
+		
+		btnCambiarArma = new JButton("Cambiar Arma");
+		btnCambiarArma.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnCambiarArma.setBounds(361, 179, 236, 32);
+		btnCambiarArma.addActionListener(this);
+		contentPane.add(btnCambiarArma);
 
 	}
 
@@ -163,6 +170,10 @@ public class Inicio extends JFrame implements ActionListener {
 		if(opcionaAddPieza == e.getSource()) {
 			CrearPieza addPiezas = new CrearPieza(sist);
 			addPiezas.setVisible(true);
+		}
+		if(btnCambiarArma == e.getSource()) {
+			CambiarArmas cambiarArma = new CambiarArmas(sist);
+			cambiarArma.setVisible(true);
 		}
 
 	}
