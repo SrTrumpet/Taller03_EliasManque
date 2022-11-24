@@ -1,15 +1,17 @@
 package cl.ucn.taller03.dominio;
 
+import cl.ucn.taller03.logica.ListaRobots;
+
 public class Equipo {
 
 	
 	private String nombreEquipo;
-	private Robot robot;
+	private ListaRobots lista;
 	private Piloto piloto;
 	
 	public Equipo(String nombreEquipo) {
 		this.nombreEquipo = nombreEquipo;
-		robot = null;
+		lista = new ListaRobots(10);
 	}
 
 	public String getNombreEquipo() {
@@ -20,14 +22,6 @@ public class Equipo {
 		this.nombreEquipo = nombreEquipo;
 	}
 
-	public Robot getRobot() {
-		return robot;
-	}
-
-	public void setRobot(Robot robot) {
-		this.robot = robot;
-	}
-
 	public Piloto getPiloto() {
 		return piloto;
 	}
@@ -35,6 +29,21 @@ public class Equipo {
 	public void setPiloto(Piloto piloto) {
 		this.piloto = piloto;
 	}
+
+	public ListaRobots getLista() {
+		return lista;
+	}
+
+	public void setLista(ListaRobots lista) {
+		this.lista = lista;
+	}
+
+	@Override
+	public String toString() {
+		return "Equipo [nombreEquipo=" + nombreEquipo + "Nombre piloto= "+piloto.getPiloto()+"]";
+	}
+	
+	
 	
 	
 	

@@ -12,6 +12,7 @@ import cl.ucn.taller03.dominio.Pieza;
 import cl.ucn.taller03.dominio.Piloto;
 import cl.ucn.taller03.dominio.Robot;
 import cl.ucn.taller03.dominio.RobotAlien;
+import cl.ucn.taller03.dominio.RobotHumano;
 import cl.ucn.taller03.dominio.Torax;
 import cl.ucn.taller03.ventanas.Inicio;
 
@@ -21,8 +22,8 @@ public class SistemaRobot implements Sistema {
 	private List<Piloto> listaPilotos;
 	private List<Equipo> listaEquipos;
 	private List<Robot> listaRobots;
+	private List<String> registroCombates;
 	private Inicio app;
-	private Sistema sist;
 
 	public SistemaRobot() {
 		listaPiezas = new ArrayList<Pieza>();
@@ -33,7 +34,6 @@ public class SistemaRobot implements Sistema {
 
 	@Override
 	public void iniciarApp(Sistema sist) {
-		this.sist = sist;
 		app = new Inicio(sist);
 		app.setVisible(true);
 	}
@@ -174,30 +174,111 @@ public class SistemaRobot implements Sistema {
 
 		String nombreRobot = datos[0];
 		String tipoRobot = datos[6];
-		
+
 		// Se crean al piloto y al Equipo a la vez
 
-		if(tipoRobot.equals("A")) {
-			
+		if (tipoRobot.equals("A")) {
+
 			String claseRobot = datos[7];
 			int[] powerUp = puntosExtrasVidaDaño(claseRobot);
-			
-			if(verificarRobot(nombreRobot) == null) {
-				Robot nuevo = new RobotAlien(nombreRobot, claseRobot,powerUp[0],powerUp[1]);
+
+			if (verificarRobot(nombreRobot) == null) {
+				Robot nuevo = new RobotAlien(nombreRobot, claseRobot, powerUp[0], powerUp[1]);
 				designarPiezasRobot(nuevo, datos);
 				listaRobots.add(nuevo);
 			}
+		} else if (tipoRobot.equals("H")) {
+
+			String nombrePiloto = datos[7];
+			String nombreEquipo = datos[8];
+
+			Piloto nuevoPiloto = verificarPiloto(nombrePiloto);
+			Equipo nuevoEquipo = verificarEquipo(nombreEquipo);
+
+			Robot nuevo = verificarRobot(nombreRobot);
+
+			if (nuevo == null) {
+
+				Robot nuevoRobot = new RobotHumano(nombreRobot);
+
+				if (nuevoPiloto == null) {
+					nuevoPiloto = new Piloto(nombrePiloto);
+					nuevoPiloto.getLista().agregarRobot(nuevoRobot);
+
+				} else {
+					nuevoPiloto.getLista().agregarRobot(nuevoRobot);
+				}
+
+				if (nuevoEquipo == null) {
+					nuevoEquipo = new Equipo(nombreEquipo);
+					nuevoEquipo.getLista().agregarRobot(nuevoRobot);
+				} else {
+					nuevoEquipo.getLista().agregarRobot(nuevoRobot);
+				}
+
+				nuevoPiloto.setEquipo(nuevoEquipo);
+				nuevoEquipo.setPiloto(nuevoPiloto);
+
+				RobotHumano setearRobot = (RobotHumano) nuevoRobot;
+				setearRobot.setEquipoMantencion(nuevoEquipo);
+				setearRobot.setNombrePiloto(nuevoPiloto);
+
+				designarPiezasRobot(nuevoRobot, datos);
+
+				listaRobots.add(nuevoRobot);
+				listaPilotos.add(nuevoPiloto);
+				listaEquipos.add(nuevoEquipo);
+
+			} else {
+
+				RobotHumano setearRobot = (RobotHumano) nuevo;
+
+				if (nuevoPiloto == null) {
+					nuevoPiloto = new Piloto(nombrePiloto);
+					nuevoPiloto.getLista().agregarRobot(setearRobot);
+
+				} else {
+					nuevoPiloto.getLista().agregarRobot(setearRobot);
+				}
+
+				if (nuevoEquipo == null) {
+					nuevoEquipo = new Equipo(nombreEquipo);
+					nuevoEquipo.getLista().agregarRobot(setearRobot);
+				} else {
+					nuevoEquipo.getLista().agregarRobot(setearRobot);
+				}
+
+				nuevoPiloto.setEquipo(nuevoEquipo);
+				nuevoEquipo.setPiloto(nuevoPiloto);
+
+				setearRobot.setEquipoMantencion(nuevoEquipo);
+				setearRobot.setNombrePiloto(nuevoPiloto);
+
+				listaRobots.add(setearRobot);
+			}
+
 		}
 
-		
-		
-		
 		System.out.println(listaRobots.toString());
-		
-		
-		
-		
-		
+
+	}
+
+	private Equipo verificarEquipo(String nombreEquipo) {
+		for (Equipo p : listaEquipos) {
+			if (p.getNombreEquipo().equals(nombreEquipo)) {
+				return p;
+			}
+		}
+		return null;
+	}
+
+	private Piloto verificarPiloto(String nombre) {
+		for (Piloto p : listaPilotos) {
+			if (p.getPiloto().equals(nombre)) {
+				return p;
+			}
+		}
+		return null;
 	}
 
 	private Pieza buscarPiezas(String nombre) {
@@ -212,45 +293,43 @@ public class SistemaRobot implements Sistema {
 	private boolean verificarNull(Object o) {
 		return o != null;
 	}
-	
+
 	private Robot verificarRobot(String nombre) {
-		for(Robot r: listaRobots) {
-			if(r.getNombre().equals(nombre)) {
+		for (Robot r : listaRobots) {
+			if (r.getNombre().equals(nombre)) {
 				return r;
 			}
-		}return null;
+		}
+		return null;
 	}
-	
-	
-	//PUNTOS EXTRAS POR CLASE DE ROBOT ALIEN
-	
+
+	// PUNTOS EXTRAS POR CLASE DE ROBOT ALIEN
+
 	private int[] puntosExtrasVidaDaño(String clase) {
-		
+
 		int[] powerUp = new int[2];
-		
-		if(clase.equals("SS+")) {
+
+		if (clase.equals("SS+")) {
 			powerUp[0] = 5000;
 			powerUp[1] = 500;
-		}else if(clase.equals("S+")) {
+		} else if (clase.equals("S+")) {
 			powerUp[0] = 3000;
 			powerUp[1] = 400;
-		}else if(clase.equals("S")) {
+		} else if (clase.equals("S")) {
 			powerUp[0] = 2000;
 			powerUp[1] = 300;
-		}else if (clase.equals("A")) {
+		} else if (clase.equals("A")) {
 			powerUp[0] = 1000;
 			powerUp[1] = 200;
-		}else if (clase.equals("B")) {
+		} else if (clase.equals("B")) {
 			powerUp[0] = 500;
 			powerUp[1] = 100;
 		}
-		
+
 		return powerUp;
 	}
-	
-	//METODO QUE CREA UN ROBOT
-	
-	
+
+	// METODO QUE CREA UN ROBOT
 
 	// METODO QUE RECIBA A UN ROBOT Y LE DESIGNE LAS PIEZAS
 
@@ -276,6 +355,78 @@ public class SistemaRobot implements Sistema {
 			}
 		}
 		return false;
+	}
+
+	@Override
+	public String bucarListaRobotsPorPiloto(String text) {
+
+		Piloto buscarPilot = buscarPiloto(text);
+
+		if (buscarPilot == null) {
+			return "Piloto no encontrado!";
+		} else {
+			return generarListaStringRobots(buscarPilot);
+		}
+
+	}
+
+	private String generarListaStringRobots(Piloto p) {
+
+		String lineaString = "Nombre del Piloto: " + p.getPiloto() + " \n";
+
+		for (int i = 0; i < p.getLista().getCantidad(); i++) {
+			lineaString += ("Robot [" + (i + 1) + "] " + p.getLista().index(i).getNombre() + "\n");
+		}
+
+		return lineaString;
+
+	}
+
+	private Piloto buscarPiloto(String nombre) {
+		for (Piloto p : listaPilotos) {
+			if (p.getPiloto().equalsIgnoreCase(nombre)) {
+				return p;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public String buscarListaRobotPorEquipo(String text) {
+		Equipo buscarEquipo = buscarEquipoRobot(text);
+
+		if (buscarEquipo == null) {
+			return "Equipo no encotrado";
+		} else {
+			return generarListaStringRobotsEquipo(buscarEquipo);
+		}
+	}
+
+	private String generarListaStringRobotsEquipo(Equipo buscarEquipo) {
+
+		String datosString = "Nombre del equipo: " + buscarEquipo.getNombreEquipo() + "\n";
+
+		for (int i = 0; i < buscarEquipo.getLista().getCantidad(); i++) {
+
+			datosString += "Robot[" + (i + 1) + "]" + buscarEquipo.getLista().index(i).getNombre() + "\n";
+
+		}
+		return datosString;
+
+	}
+
+	private Equipo buscarEquipoRobot(String text) {
+		for (Equipo e : listaEquipos) {
+			if (e.getNombreEquipo().equalsIgnoreCase(text)) {
+				return e;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public void guardarCombates(String linea) {
+		registroCombates.add(linea);
 	}
 
 	// CREAR UN METODO QUE DIGA SI EXISTE EL PILOTO Y DEVUELVA SU REFERENCIA

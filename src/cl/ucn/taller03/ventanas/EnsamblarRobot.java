@@ -9,6 +9,8 @@ import cl.ucn.taller03.logica.Sistema;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
@@ -17,7 +19,8 @@ import javax.swing.JTextField;
 import java.awt.Choice;
 import javax.swing.JButton;
 
-public class EnsamblarRobot extends JFrame implements ActionListener {
+@SuppressWarnings("serial")
+public class EnsamblarRobot extends JFrame implements ActionListener, ItemListener {
 
 	private JPanel contentPane;
 	private Sistema sist;
@@ -72,6 +75,8 @@ public class EnsamblarRobot extends JFrame implements ActionListener {
 		iniciarChoice();
 		iniciarBotones();
 
+		setLocationRelativeTo(null);// Deja centrada la ventana
+		setResizable(false);// No deja que se reescale la ventana para que la intefaz no cambie
 	}
 
 	private void iniciarLabels() {
@@ -201,6 +206,7 @@ public class EnsamblarRobot extends JFrame implements ActionListener {
 		choiceAlienHumano.setBounds(506, 65, 159, 32);
 		choiceAlienHumano.add("Robot Humano");
 		choiceAlienHumano.add("Robot Alien");
+		choiceAlienHumano.addItemListener(this);
 		contentPane.add(choiceAlienHumano);
 
 		choiceClase = new Choice();
@@ -210,6 +216,7 @@ public class EnsamblarRobot extends JFrame implements ActionListener {
 		choiceClase.add("S");
 		choiceClase.add("A");
 		choiceClase.add("B");
+		choiceClase.setEnabled(false);
 		contentPane.add(choiceClase);
 
 	}
@@ -221,7 +228,78 @@ public class EnsamblarRobot extends JFrame implements ActionListener {
 			dispose();
 		}
 		if(btnEnsamblador == e.getSource()) {
-			
+			guardarDatosEnsamblador();
 		}
 	}
+	
+	
+	
+	
+	
+	private void guardarDatosEnsamblador() {
+		
+		String todosLosDatos = "";
+		
+		String nombreRobot = textNombreRobot.getText();
+		String nombrePiernas = textNombrePierna.getText();
+		String nombreBrazo = textNombreBrazo.getText();
+		String nombreTorax = textNombreTorax.getText();
+		String nombreCabeza = textNombreCabeza.getText();
+		String nombreArma = textNombreArma.getText();
+		
+		String tipoDeRobot = choiceAlienHumano.getSelectedItem();
+		
+		if(tipoDeRobot.equals("Robot Alien")) {
+			String clase = choiceClase.getSelectedItem();
+			
+			todosLosDatos = nombreRobot+","+nombrePiernas+","+nombreBrazo+","+nombreTorax+","+nombreCabeza+","+nombreArma+",A,"+clase;
+			
+			sist.guardarRobot(todosLosDatos);
+		}else {
+			
+			String nombrePiloto = textNombrePiloto.getText();
+			String nombreEquipo = textNombreEquipo.getText();
+			
+			todosLosDatos = nombreRobot+","+nombrePiernas+","+nombreBrazo+","+nombreTorax+","+nombreCabeza+","+nombreArma+",H,"+nombrePiloto+","+nombreEquipo;
+			
+			sist.guardarRobot(todosLosDatos);
+		}
+		
+		
+		
+	}
+
+	@Override
+	public void itemStateChanged(ItemEvent e) {
+		
+		if(choiceAlienHumano == e.getSource()) {
+			if(choiceAlienHumano.getSelectedItem().equals("Robot Alien")) {
+				
+				lblNombrePiloto.setText("No Disponilbe");
+				textNombrePiloto.setEnabled(false);
+				
+				lblNombreEquipo.setText("No Disponible");
+				textNombreEquipo.setEnabled(false);
+				
+				lblClase.setText("Clase");
+				choiceClase.setEnabled(true);
+			}else {
+				
+				lblClase.setText("No disponible");
+				choiceClase.setEnabled(false);
+				
+				lblNombrePiloto.setText("Piloto");
+				textNombrePiloto.setEnabled(true);
+				
+				lblNombreEquipo.setText("Equipo");
+				textNombreEquipo.setEnabled(true);
+				
+			}
+		}
+	}
+	
+	
+	
+	
+	
 }

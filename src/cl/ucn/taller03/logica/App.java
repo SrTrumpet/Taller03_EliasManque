@@ -29,8 +29,14 @@ public class App {
 		
 		while(leer.hasNextLine()) {
 			String linea = leer.nextLine();
-			System.out.println(linea);
 			sist.guardarRobot(linea);
+		}
+		
+		leer = new Scanner(new File("src\\cl\\ucn\\taller03\\txt\\combates.txt"));
+		
+		while(leer.hasNextLine()) {
+			String linea = leer.nextLine();
+			sist.guardarCombates(linea);
 		}
 
 	}

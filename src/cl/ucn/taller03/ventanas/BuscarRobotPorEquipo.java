@@ -1,25 +1,24 @@
 package cl.ucn.taller03.ventanas;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
-import cl.ucn.taller03.logica.Sistema;
-
-import javax.swing.JLabel;
-import javax.swing.ImageIcon;
 import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JTextField;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.border.EmptyBorder;
+
+import cl.ucn.taller03.logica.Sistema;
 
 @SuppressWarnings("serial")
-public class BuscarRobotPorPiloto extends JFrame implements ActionListener{
+public class BuscarRobotPorEquipo extends JFrame implements ActionListener {
 
 	private Sistema sist;
 	
@@ -34,12 +33,10 @@ public class BuscarRobotPorPiloto extends JFrame implements ActionListener{
 	
 	
 	private JTextPane textPane;
-
-
 	/**
 	 * Create the frame.
 	 */
-	public BuscarRobotPorPiloto(Sistema sist) {
+	public BuscarRobotPorEquipo(Sistema sist) {
 		
 		this.sist = sist;
 		
@@ -67,10 +64,10 @@ public class BuscarRobotPorPiloto extends JFrame implements ActionListener{
 	
 	private void iniciarLabels() {
 		
-		lblTituloBuscar = new JLabel("Ingresa el nombre del Piloto");
+		lblTituloBuscar = new JLabel("Ingresa el nombre del Equipo");
 		lblTituloBuscar.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblTituloBuscar.setIcon(new ImageIcon("D:\\Program\\eclipse\\Taller03_EliasManque\\src\\cl\\ucn\\taller03\\img\\iconBarra.jpg"));
-		lblTituloBuscar.setBounds(84, 27, 272, 65);
+		lblTituloBuscar.setBounds(72, 27, 346, 65);
 		contentPane.add(lblTituloBuscar);
 	}
 	
@@ -120,7 +117,7 @@ public class BuscarRobotPorPiloto extends JFrame implements ActionListener{
 		}
 		if(btnBuscar == e.getSource()) {
 
-			String datos = sist.bucarListaRobotsPorPiloto(textBuscadorPiloto.getText());
+			String datos = sist.buscarListaRobotPorEquipo(textBuscadorPiloto.getText());
 			
 			textPane.setText(datos);
 			
@@ -129,4 +126,5 @@ public class BuscarRobotPorPiloto extends JFrame implements ActionListener{
 		
 		
 	}
+
 }

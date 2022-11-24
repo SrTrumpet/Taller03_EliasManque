@@ -5,6 +5,10 @@ public class RobotHumano extends Robot{
 	private Piloto nombrePiloto;
 	private Equipo equipoMantencion;
 	
+	public RobotHumano(String nombre) {
+		super(nombre);
+	}
+	
 	
 	public RobotHumano(String nombre, Piloto nombrePiloto, Equipo equipoMantencion) {
 		super(nombre);
@@ -24,6 +28,13 @@ public class RobotHumano extends Robot{
 	}
 	public void setEquipoMantencion(Equipo equipoMantencion) {
 		this.equipoMantencion = equipoMantencion;
+	}
+
+
+	@Override
+	public String toString() {
+		return "RobotHumano [nombrePiloto=" + nombrePiloto.getPiloto() + ", equipoMantencion=" + equipoMantencion.getNombreEquipo() + ", toString()="
+				+ super.toString() + "]";
 	}
 	
 	

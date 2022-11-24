@@ -383,5 +383,4 @@ public class CrearPieza extends JFrame implements ActionListener, ItemListener {
 		 **/
 
 	}
-
 }

@@ -91,7 +91,7 @@ public class Inicio extends JFrame implements ActionListener {
 		contentPane.add(mostrarEstadisticas);
 
 		//
-		mostrarRobotPiloto = new JButton("Buscar piloto y su Robot");
+		mostrarRobotPiloto = new JButton("Buscar piloto y sus Robots");
 		mostrarRobotPiloto.setFont(new Font("Tahoma", Font.BOLD, 14));
 		mostrarRobotPiloto.setBounds(75, 247, 218, 32);
 		mostrarRobotPiloto.addActionListener(this);
@@ -142,6 +142,8 @@ public class Inicio extends JFrame implements ActionListener {
 			
 		}
 		if(robotPorEquipo == e.getSource()) {
+			BuscarRobotPorEquipo buscadorEquipo = new BuscarRobotPorEquipo(sist);
+			buscadorEquipo.setVisible(true);
 			
 		}
 		if(mostrarRobotPiloto == e.getSource()) {
