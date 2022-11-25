@@ -534,6 +534,7 @@ public class SistemaRobot implements Sistema {
 
 	@Override
 	public String buscarRobotPieza(String nombreRoboString, String pieza) {
+		String arma = "Null";
 
 		Pieza buscarPieza = null;
 
@@ -544,22 +545,62 @@ public class SistemaRobot implements Sistema {
 		}
 
 		for (Robot r : listaRobots) {
-			if(r.getNombre().equalsIgnoreCase(nombreRoboString)) {
+			if (r.getNombre().equalsIgnoreCase(nombreRoboString)) {
 				for (int i = 0; i < r.getLista().getCantidad(); i++) {
 					if (!(r.getLista().getIndex(i) instanceof Arma)) {
 						if (r.getLista().getIndex(i).getClass() == buscarPieza.getClass()) {
 							System.out.println("NOMBRE PIEZA: " + r.getLista().getIndex(i).getNombre());
-							return "Find- Pieza Inst.: " + r.getLista().getIndex(i).getNombre();
+							arma = r.getLista().getIndex(i).getNombre();
 						}
-						
+
 					}
-					
+
 				}
+				return "Find- Pieza Inst.: "+arma;
 			}
 		}
 
 		return "No encontrado";
 
+	}
+
+	@Override
+	public void cabmiarPieza(String pieza, String nombreRobot) {
+		
+		
+		// Eliminar la pieza de donde este en los robots
+
+		Robot cambiar = null;
+		Pieza armaEncontrada = null;
+
+		for (Pieza p : listaPiezas) {
+			if (p.getNombre().equalsIgnoreCase(pieza)) {
+				armaEncontrada = p;
+			}
+		}
+		
+		for (Robot r : listaRobots) {
+			if (r.getNombre().equalsIgnoreCase(nombreRobot)) {
+				cambiar = r;
+				for(int i = 0; i < r.getLista().getCantidad(); i++) {
+					if(r.getLista().getIndex(i).getClass() == armaEncontrada.getClass()) {
+						r.getLista().eliminar(r.getLista().getIndex(i).getNombre());
+					}
+				}
+			}
+		}
+
+		for (Robot r : listaRobots) {
+			if (r.getLista().verificarExiste(armaEncontrada)) {
+				r.getLista().eliminar(armaEncontrada.getNombre());
+			}
+			
+		}
+
+		cambiar.getLista().agregarPieza(armaEncontrada);
+		
+		
+		
 	}
 
 	// CREAR UN METODO QUE DIGA SI EXISTE EL PILOTO Y DEVUELVA SU REFERENCIA

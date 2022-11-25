@@ -13,6 +13,7 @@ public interface Sistema {
 	void cambiarArma(String arma, String nombreRobot);
 	String buscarNombrePieza(String nombreArma);
 	String buscarRobotPieza(String nombreRoboString,String pieza);
+	void cabmiarPieza(String pieza, String nombreRobot);
 	
 	
 	

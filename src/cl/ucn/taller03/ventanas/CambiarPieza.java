@@ -1,6 +1,5 @@
 package cl.ucn.taller03.ventanas;
 
-import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -21,7 +20,7 @@ import javax.swing.ImageIcon;
 public class CambiarPieza extends JFrame implements ActionListener {
 
 	private Sistema sist;
-	
+
 	private JPanel contentPane;
 	private JTextField textNombrePieza;
 	private JTextField textNombreRobot;
@@ -32,7 +31,6 @@ public class CambiarPieza extends JFrame implements ActionListener {
 	private JButton btnBuscar;
 	private JButton btnAtras;
 	private JButton btnCambiarArma;
-
 
 	/**
 	 * Create the frame.
@@ -50,11 +48,11 @@ public class CambiarPieza extends JFrame implements ActionListener {
 		contentPane.setLayout(null);
 
 		iniciarComponentes();
-		
+
 		setLocationRelativeTo(null);// Deja centrada la ventana
 		setResizable(false);// No deja que se reescale la ventana para que la intefaz no cambie
 	}
-	
+
 	private void iniciarComponentes() {
 
 		lblTituloBuscar = new JLabel("Ingrese la Pieza");
@@ -104,7 +102,8 @@ public class CambiarPieza extends JFrame implements ActionListener {
 		contentPane.add(btnAtras);
 
 		btnBuscar = new JButton("Buscar");
-		btnBuscar.setIcon(new ImageIcon("D:\\Program\\eclipse\\Taller03_EliasManque\\src\\cl\\ucn\\taller03\\img\\iconBarra.jpg"));
+		btnBuscar.setIcon(new ImageIcon(
+				"D:\\Program\\eclipse\\Taller03_EliasManque\\src\\cl\\ucn\\taller03\\img\\iconBarra.jpg"));
 		btnBuscar.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnBuscar.setBounds(117, 168, 151, 34);
 		btnBuscar.addActionListener(this);
@@ -113,26 +112,37 @@ public class CambiarPieza extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
-		if(btnBuscar == e.getSource()) {
-			
+
+		if (btnBuscar == e.getSource()) {
+
 			String nombrePieza = textNombrePieza.getText();
 			String nombreRoboString = textNombreRobot.getText();
-			
+
 			String enUso = sist.buscarNombrePieza(nombrePieza);
-			String buscarRobot = sist.buscarRobotPieza(nombreRoboString,nombrePieza);
-			
+			String buscarRobot = sist.buscarRobotPieza(nombreRoboString, nombrePieza);
+
 			lblArmaEnUso.setText(enUso);
 			lblRobotEncontrado.setText(buscarRobot);
-			
-			
-		}if(btnCambiarArma == e.getSource()) {
-			
-			
-		}if(btnAtras == e.getSource()) {
+
+		}
+		if (btnCambiarArma == e.getSource()) {
+
+			String arma = textNombrePieza.getText();
+			String nombreRobot = textNombreRobot.getText();
+
+			String enUso = sist.buscarNombrePieza(arma);
+			String buscarRobot = sist.buscarRobotPieza(nombreRobot, textNombrePieza.getText());
+
+			if (enUso.equalsIgnoreCase("disponible") || !enUso.equals("No encontrada")) {
+				if (!buscarRobot.equalsIgnoreCase("No encontrado")) {
+					sist.cabmiarPieza(arma, nombreRobot);
+				}
+			}
+		}
+		if (btnAtras == e.getSource()) {
 			dispose();
 		}
-		
+
 	}
 
 }
