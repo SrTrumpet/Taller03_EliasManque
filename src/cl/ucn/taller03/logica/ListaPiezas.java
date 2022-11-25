@@ -25,22 +25,20 @@ public class ListaPiezas {
 
 	public boolean eliminar(String nombre) {
 
-		int i = 0;
-
-		for (i = 0; i < cantidad; i++) {
-			if (lista[i].getNombre().equalsIgnoreCase(nombre)) {
-				break;
+		Pieza[] listaAux = new Pieza[max];
+		int agregar = 0;
+		
+		for(int i = 0; i < cantidad ; i++) {
+			if(!lista[i].getNombre().equalsIgnoreCase(nombre)) {
+				listaAux[agregar] = lista[i];
+				agregar++;
 			}
 		}
-
-		if (i == cantidad) {
-			return false;
-		} else {
-			for (int j = i; j < cantidad - 1; j++) {
-				lista[j] = lista[j + 1];
-			}
-			return true;
-		}
+		
+		cantidad = agregar;
+		this.lista = listaAux;
+		return true;
+		
 
 	}
 

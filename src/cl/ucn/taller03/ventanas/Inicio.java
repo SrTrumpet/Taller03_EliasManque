@@ -161,7 +161,8 @@ public class Inicio extends JFrame implements ActionListener {
 			
 		}
 		if(cambiarPiezaRobot == e.getSource()) {
-			
+			CambiarPieza cambiarPieza = new CambiarPieza(sist);
+			cambiarPieza.setVisible(true);
 		}
 		if(ensamblarRobot == e.getSource()) {
 			EnsamblarRobot ensamblar = new EnsamblarRobot(sist);

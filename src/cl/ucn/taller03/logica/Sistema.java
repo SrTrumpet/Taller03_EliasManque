@@ -11,6 +11,8 @@ public interface Sistema {
 	String buscarNombreArma(String nombreArma);
 	String buscarRobot(String nombreRoboString);
 	void cambiarArma(String arma, String nombreRobot);
+	String buscarNombrePieza(String nombreArma);
+	String buscarRobotPieza(String nombreRoboString,String pieza);
 	
 	
 	
