@@ -7,6 +7,7 @@ import cl.ucn.taller03.dominio.Arma;
 import cl.ucn.taller03.dominio.Brazo;
 import cl.ucn.taller03.dominio.Cabeza;
 import cl.ucn.taller03.dominio.Equipo;
+import cl.ucn.taller03.dominio.Estadisticas;
 import cl.ucn.taller03.dominio.Pierna;
 import cl.ucn.taller03.dominio.Pieza;
 import cl.ucn.taller03.dominio.Piloto;
@@ -18,6 +19,7 @@ import cl.ucn.taller03.ventanas.Inicio;
 
 public class SistemaRobot implements Sistema {
 
+	private List<Estadisticas> listaEstadisticas;
 	private List<Pieza> listaPiezas;
 	private List<Piloto> listaPilotos;
 	private List<Equipo> listaEquipos;
@@ -31,6 +33,7 @@ public class SistemaRobot implements Sistema {
 		listaPilotos = new ArrayList<Piloto>();
 		listaEquipos = new ArrayList<Equipo>();
 		registroCombates = new ArrayList<String>();
+		listaEstadisticas = new ArrayList<Estadisticas>();
 	}
 
 	@Override
@@ -105,6 +108,7 @@ public class SistemaRobot implements Sistema {
 				Pieza nuevoTorax = new Torax(nombre, vida);
 
 				nuevoTorax.añadirMasVidaBase(vidaExtra);
+				nuevoTorax.añadirMasVidaBase(vida);
 				nuevoTorax.setRareza(rareza);
 				nuevoTorax.setAtaqueExtra(dañoExtra);
 
@@ -122,6 +126,7 @@ public class SistemaRobot implements Sistema {
 				Pieza nuevaCabeza = new Cabeza(nombre, velocidad, vida);
 
 				nuevaCabeza.añadirMasVidaBase(vidaExtra);
+				nuevaCabeza.añadirMasVidaBase(vida);
 				nuevaCabeza.setRareza(rareza);
 				nuevaCabeza.setAtaqueExtra(dañoExtra);
 
@@ -188,6 +193,18 @@ public class SistemaRobot implements Sistema {
 				Robot nuevo = new RobotAlien(nombreRobot, claseRobot, powerUp[0], powerUp[1]);
 				designarPiezasRobot(nuevo, datos);
 				listaRobots.add(nuevo);
+
+				Estadisticas nuevaEstadistica = new Estadisticas(nuevo);
+
+				generarEstadistica(nuevaEstadistica);
+
+				RobotAlien nuevoALien = (RobotAlien) nuevo;
+				nuevaEstadistica.añadirVidaRobot(nuevoALien.getVida());
+
+				nuevoALien.setEstadisticas(nuevaEstadistica);
+				
+				listaEstadisticas.add(nuevaEstadistica);
+
 			}
 		} else if (tipoRobot.equals("H")) {
 
@@ -263,6 +280,52 @@ public class SistemaRobot implements Sistema {
 
 		System.out.println(listaRobots.toString());
 
+	}
+
+	private void generarEstadistica(Estadisticas e) {
+
+		// Estadisticas vida total del robot
+		for (int i = 0; i < e.getRobot().getLista().getCantidad(); i++) {
+			if (!(e.getRobot().getLista().getIndex(i) instanceof Arma)) {
+				e.añadirVida(e.getRobot().getLista().getIndex(i).getVidaBase());
+			}
+		}
+
+		// ESTADISTICA AÑADIR VELOCIDAD
+		for (int i = 0; i < e.getRobot().getLista().getCantidad(); i++) {
+			if (!(e.getRobot().getLista().getIndex(i) instanceof Arma)) {
+				Pieza pieza = e.getRobot().getLista().getIndex(i);
+				if (pieza instanceof Pierna) {
+					Pierna pierna = (Pierna) pieza;
+					e.añadirVelocidad(pierna.getVelocidad());
+				} else if (pieza instanceof Cabeza) {
+					Cabeza cabeza = (Cabeza) pieza;
+					e.añadirVelocidad(cabeza.getVelocidad());
+				}
+			}
+		}
+
+		// ESTADISTICA AÑADIR Ataque TOTAL
+		for (int i = 0; i < e.getRobot().getLista().getCantidad(); i++) {
+			if (!(e.getRobot().getLista().getIndex(i) instanceof Arma)) {
+				Pieza pieza = e.getRobot().getLista().getIndex(i);
+				e.añadirAtaque(pieza.getAtaqueExtra());
+				if (pieza instanceof Brazo) {
+					Brazo brazo = (Brazo) pieza;
+					e.añadirAtaque(brazo.getAtaque());
+				}
+			}
+		}
+
+		for (int i = 0; i < e.getRobot().getLista().getCantidad(); i++) {
+			Pieza pieza = e.getRobot().getLista().getIndex(i);
+			if (pieza instanceof Arma) {
+				Arma arma = (Arma) pieza;
+				e.setVelocidadAtaque(arma.getVelocidadDeAtaque());
+				e.setDaño(arma.getDaño());
+			}
+
+		}
 	}
 
 	private Equipo verificarEquipo(String nombreEquipo) {
@@ -556,7 +619,7 @@ public class SistemaRobot implements Sistema {
 					}
 
 				}
-				return "Find- Pieza Inst.: "+arma;
+				return "Find- Pieza Inst.: " + arma;
 			}
 		}
 
@@ -566,8 +629,7 @@ public class SistemaRobot implements Sistema {
 
 	@Override
 	public void cabmiarPieza(String pieza, String nombreRobot) {
-		
-		
+
 		// Eliminar la pieza de donde este en los robots
 
 		Robot cambiar = null;
@@ -578,12 +640,12 @@ public class SistemaRobot implements Sistema {
 				armaEncontrada = p;
 			}
 		}
-		
+
 		for (Robot r : listaRobots) {
 			if (r.getNombre().equalsIgnoreCase(nombreRobot)) {
 				cambiar = r;
-				for(int i = 0; i < r.getLista().getCantidad(); i++) {
-					if(r.getLista().getIndex(i).getClass() == armaEncontrada.getClass()) {
+				for (int i = 0; i < r.getLista().getCantidad(); i++) {
+					if (r.getLista().getIndex(i).getClass() == armaEncontrada.getClass()) {
 						r.getLista().eliminar(r.getLista().getIndex(i).getNombre());
 					}
 				}
@@ -594,13 +656,33 @@ public class SistemaRobot implements Sistema {
 			if (r.getLista().verificarExiste(armaEncontrada)) {
 				r.getLista().eliminar(armaEncontrada.getNombre());
 			}
-			
+
 		}
 
 		cambiar.getLista().agregarPieza(armaEncontrada);
-		
-		
-		
+
+	}
+
+	@Override
+	public String obtenerEstadisticas(String nombreRobot) {
+		String datos = "No encontrado!";
+
+		for (Estadisticas e : listaEstadisticas) {
+			if (e.getRobot().getNombre().equalsIgnoreCase(nombreRobot)) {
+				String nombreR = e.getRobot().getNombre();
+				int vida = e.getVida();
+				int ataque = e.getAtaque();
+				int valocidad = e.getVelocidad();
+				int velocidadAtaque = e.getVelocidadAtaque();
+				int daño = e.getDaño();
+
+				datos = nombreR + ": \n" + "Vida Total : " + vida + "\nAtaque : " + ataque + "\nVelocidad : "
+						+ valocidad + "\nVelocidad de ataque : " + velocidadAtaque + "\nDaño : " + daño;
+
+			}
+		}
+
+		return datos;
 	}
 
 	// CREAR UN METODO QUE DIGA SI EXISTE EL PILOTO Y DEVUELVA SU REFERENCIA

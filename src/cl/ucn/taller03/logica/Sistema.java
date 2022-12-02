@@ -132,4 +132,6 @@ public interface Sistema {
 	 */
 	void cabmiarPieza(String pieza, String nombreRobot);
 
+	String obtenerEstadisticas(String nombreRobot);
+
 }

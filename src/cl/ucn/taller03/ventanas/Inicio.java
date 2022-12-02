@@ -158,7 +158,8 @@ public class Inicio extends JFrame implements ActionListener {
 			buscarPiloto.setVisible(true);
 		}
 		if(mostrarEstadisticas == e.getSource()) {
-			
+			Estadistica estadistica = new Estadistica(sist);
+			estadistica.setVisible(true);
 		}
 		if(cambiarPiezaRobot == e.getSource()) {
 			CambiarPieza cambiarPieza = new CambiarPieza(sist);
