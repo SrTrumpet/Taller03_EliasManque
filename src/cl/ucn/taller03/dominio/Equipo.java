@@ -4,11 +4,10 @@ import cl.ucn.taller03.logica.ListaRobots;
 
 public class Equipo {
 
-	
 	private String nombreEquipo;
 	private ListaRobots lista;
 	private Piloto piloto;
-	
+
 	public Equipo(String nombreEquipo) {
 		this.nombreEquipo = nombreEquipo;
 		lista = new ListaRobots(10);
@@ -40,11 +39,7 @@ public class Equipo {
 
 	@Override
 	public String toString() {
-		return "Equipo [nombreEquipo=" + nombreEquipo + "Nombre piloto= "+piloto.getPiloto()+"]";
+		return "Equipo [nombreEquipo=" + nombreEquipo + "Nombre piloto= " + piloto.getPiloto() + "]";
 	}
-	
-	
-	
-	
-	
+
 }

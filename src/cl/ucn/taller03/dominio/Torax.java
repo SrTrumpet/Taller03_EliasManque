@@ -1,10 +1,9 @@
 package cl.ucn.taller03.dominio;
 
-public class Torax extends Pieza{
+public class Torax extends Pieza {
 
-	
 	private int vida;
-	
+
 	public Torax(String nombre, int vida) {
 		super(nombre);
 		this.vida = vida;
@@ -24,5 +23,4 @@ public class Torax extends Pieza{
 		return "Torax [vida=" + vida + ", toString()=" + super.toString() + "]";
 	}
 
-	
 }

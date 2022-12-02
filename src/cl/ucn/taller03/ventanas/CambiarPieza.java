@@ -39,7 +39,7 @@ public class CambiarPieza extends JFrame implements ActionListener {
 		this.sist = sist;
 		setIconImage(Toolkit.getDefaultToolkit()
 				.getImage("D:\\Program\\eclipse\\Taller03_EliasManque\\src\\cl\\ucn\\taller03\\img\\iconBarra.jpg"));
-		setTitle("Cambiar Arma");
+		setTitle("Cambiar Pieza");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 427, 322);
 		contentPane = new JPanel();
@@ -89,7 +89,7 @@ public class CambiarPieza extends JFrame implements ActionListener {
 		lblRobotEncontrado.setBounds(215, 119, 171, 28);
 		contentPane.add(lblRobotEncontrado);
 
-		btnCambiarArma = new JButton("Cambiar Arma");
+		btnCambiarArma = new JButton("Cambiar Pieza");
 		btnCambiarArma.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnCambiarArma.setBounds(22, 212, 171, 34);
 		btnCambiarArma.addActionListener(this);

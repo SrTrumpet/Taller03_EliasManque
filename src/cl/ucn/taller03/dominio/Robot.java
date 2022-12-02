@@ -5,16 +5,14 @@ import cl.ucn.taller03.logica.ListaPiezas;
 public class Robot {
 
 	private String nombre;
-	private int estadisticas;
+	private Estadisticas estadisticas;
 	private ListaPiezas lista;
-	
+
 	public Robot(String nombre) {
 		this.nombre = nombre;
 		lista = new ListaPiezas(5);
 	}
 
-	
-	
 	public String getNombre() {
 		return nombre;
 	}
@@ -23,11 +21,11 @@ public class Robot {
 		this.nombre = nombre;
 	}
 
-	public int getEstadisticas() {
+	public Estadisticas getEstadisticas() {
 		return estadisticas;
 	}
 
-	public void setEstadisticas(int estadisticas) {
+	public void setEstadisticas(Estadisticas estadisticas) {
 		this.estadisticas = estadisticas;
 	}
 
@@ -39,17 +37,9 @@ public class Robot {
 		this.lista = lista;
 	}
 
-
-
 	@Override
 	public String toString() {
 		return "Robot [nombre=" + nombre + ", estadisticas=" + estadisticas + ", lista=" + lista.toString() + "]";
 	}
-	
-	
-	
-	
-	
-	
-	
+
 }

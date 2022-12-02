@@ -1,10 +1,9 @@
 package cl.ucn.taller03.dominio;
 
-public class Pierna extends Pieza{
+public class Pierna extends Pieza {
 
-	
 	private int velocidad;
-	
+
 	public Pierna(String nombre, int velocidad) {
 		super(nombre);
 		this.velocidad = velocidad;
@@ -24,6 +23,4 @@ public class Pierna extends Pieza{
 		return "Pierna [velocidad=" + velocidad + ", toString()=" + super.toString() + "]";
 	}
 
-	
-	
 }

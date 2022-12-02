@@ -1,11 +1,10 @@
 package cl.ucn.taller03.dominio;
 
-public class Cabeza extends Pieza{
-	
-	
+public class Cabeza extends Pieza {
+
 	private int velocidad;
 	private int vida;
-	
+
 	public Cabeza(String nombre, int velocidad, int vida) {
 		super(nombre);
 		this.velocidad = velocidad;
@@ -32,8 +31,5 @@ public class Cabeza extends Pieza{
 	public String toString() {
 		return "Cabeza [velocidad=" + velocidad + ", vida=" + vida + ", toString()=" + super.toString() + "]";
 	}
-	
-	
-	
 
 }
