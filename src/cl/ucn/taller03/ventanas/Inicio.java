@@ -146,7 +146,8 @@ public class Inicio extends JFrame implements ActionListener {
 
 		}
 		if(victoriasPorLaHumanidad == e.getSource()) {
-			
+			Victorias victorias = new Victorias(sist);
+			victorias.setVisible(true);
 		}
 		if(robotPorEquipo == e.getSource()) {
 			BuscarRobotPorEquipo buscadorEquipo = new BuscarRobotPorEquipo(sist);

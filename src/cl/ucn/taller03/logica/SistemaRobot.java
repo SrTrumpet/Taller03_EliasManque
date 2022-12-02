@@ -243,10 +243,18 @@ public class SistemaRobot implements Sistema {
 				setearRobot.setNombrePiloto(nuevoPiloto);
 
 				designarPiezasRobot(nuevoRobot, datos);
+				
+				Estadisticas estadisticas = new Estadisticas(setearRobot);
+				estadisticas.setRobot(nuevoRobot);
+				
+				generarEstadistica(estadisticas);
+				
+				nuevoRobot.setEstadisticas(estadisticas);
 
 				listaRobots.add(nuevoRobot);
 				listaPilotos.add(nuevoPiloto);
 				listaEquipos.add(nuevoEquipo);
+				listaEstadisticas.add(estadisticas);
 
 			} else {
 
@@ -669,6 +677,7 @@ public class SistemaRobot implements Sistema {
 
 		for (Estadisticas e : listaEstadisticas) {
 			if (e.getRobot().getNombre().equalsIgnoreCase(nombreRobot)) {
+				
 				String nombreR = e.getRobot().getNombre();
 				int vida = e.getVida();
 				int ataque = e.getAtaque();
@@ -683,6 +692,28 @@ public class SistemaRobot implements Sistema {
 		}
 
 		return datos;
+	}
+
+	@Override
+	public String generarPorcentajeVictorias() {
+		
+		int totalRegistros = registroCombates.size();
+		int humanos = 0;
+		int alien = 0;
+		
+		
+		for(String s: registroCombates) {
+			String datos[] = s.split(",");
+			if(datos[6].equalsIgnoreCase("H")) {
+				humanos++;
+			}else if(datos[6].equalsIgnoreCase("A")) {
+				alien++;
+			}
+		}
+		
+		double porcentaje = (humanos/totalRegistros)*100;
+		double porcentajeAlie = (alien/totalRegistros)*100;
+		return "Porcentaje de victorias: \nHumanos: "+porcentaje+"%\nAlien: "+porcentajeAlie+"%";
 	}
 
 	// CREAR UN METODO QUE DIGA SI EXISTE EL PILOTO Y DEVUELVA SU REFERENCIA

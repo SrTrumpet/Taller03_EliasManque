@@ -1,7 +1,5 @@
 package cl.ucn.taller03.ventanas;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -19,6 +17,7 @@ import javax.swing.border.EmptyBorder;
 
 import cl.ucn.taller03.logica.Sistema;
 
+@SuppressWarnings("serial")
 public class Estadistica extends JFrame implements ActionListener {
 
 	private JPanel contentPane;

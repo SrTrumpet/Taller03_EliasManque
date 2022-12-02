@@ -134,4 +134,5 @@ public interface Sistema {
 
 	String obtenerEstadisticas(String nombreRobot);
 
+	String generarPorcentajeVictorias();
 }
