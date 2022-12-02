@@ -202,7 +202,7 @@ public class SistemaRobot implements Sistema {
 				nuevaEstadistica.añadirVidaRobot(nuevoALien.getVida());
 
 				nuevoALien.setEstadisticas(nuevaEstadistica);
-				
+
 				listaEstadisticas.add(nuevaEstadistica);
 
 			}
@@ -243,12 +243,12 @@ public class SistemaRobot implements Sistema {
 				setearRobot.setNombrePiloto(nuevoPiloto);
 
 				designarPiezasRobot(nuevoRobot, datos);
-				
+
 				Estadisticas estadisticas = new Estadisticas(setearRobot);
 				estadisticas.setRobot(nuevoRobot);
-				
+
 				generarEstadistica(estadisticas);
-				
+
 				nuevoRobot.setEstadisticas(estadisticas);
 
 				listaRobots.add(nuevoRobot);
@@ -677,7 +677,7 @@ public class SistemaRobot implements Sistema {
 
 		for (Estadisticas e : listaEstadisticas) {
 			if (e.getRobot().getNombre().equalsIgnoreCase(nombreRobot)) {
-				
+
 				String nombreR = e.getRobot().getNombre();
 				int vida = e.getVida();
 				int ataque = e.getAtaque();
@@ -696,24 +696,23 @@ public class SistemaRobot implements Sistema {
 
 	@Override
 	public String generarPorcentajeVictorias() {
-		
+
 		int totalRegistros = registroCombates.size();
-		int humanos = 0;
-		int alien = 0;
-		
-		
-		for(String s: registroCombates) {
+		double humanos = 0;
+		double alien = 0;
+
+		for (String s : registroCombates) {
 			String datos[] = s.split(",");
-			if(datos[6].equalsIgnoreCase("H")) {
+			if (datos[6].equalsIgnoreCase("H")) {
 				humanos++;
-			}else if(datos[6].equalsIgnoreCase("A")) {
+			} else if (datos[6].equalsIgnoreCase("A")) {
 				alien++;
 			}
 		}
-		
-		double porcentaje = (humanos/totalRegistros)*100;
-		double porcentajeAlie = (alien/totalRegistros)*100;
-		return "Porcentaje de victorias: \nHumanos: "+porcentaje+"%\nAlien: "+porcentajeAlie+"%";
+
+		double porcentaje = (humanos / totalRegistros) * 100;
+		double porcentajeAlie = (alien / totalRegistros) * 100;
+		return "Porcentaje de victorias: \nHumanos: " + porcentaje + "%\nAlien: " + porcentajeAlie + "%";
 	}
 
 	// CREAR UN METODO QUE DIGA SI EXISTE EL PILOTO Y DEVUELVA SU REFERENCIA

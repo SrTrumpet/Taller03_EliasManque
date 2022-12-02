@@ -1,1 +1,5 @@
 GurrenBox,RoboCop,YubiYubi,Metoroido,Starlight,Gonzatron,H
+GurrenBox,RoboCop,YubiYubi,Metoroido,Starlight,Gonzatron,A
+GurrenBox,RoboCop,YubiYubi,Metoroido,Starlight,Gonzatron,A
+GurrenBox,RoboCop,YubiYubi,Metoroido,Starlight,Gonzatron,A
+GurrenBox,RoboCop,YubiYubi,Metoroido,Starlight,Gonzatron,A
