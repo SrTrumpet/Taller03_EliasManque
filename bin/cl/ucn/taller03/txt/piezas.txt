@@ -3,3 +3,6 @@ HerculesX-13,PP,B,1500
 IronTorax,PE,T,1000
 CascoMinero,PP,C,200,500
 CascoHuaso,PP,C,600,700
+Patas Locas,PP,P,10000
+Wates,PE,B,6000
+Pecho Frio,PP,T,8000
