@@ -1,5 +1,6 @@
 package cl.ucn.taller03.logica;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -135,8 +136,9 @@ public class SistemaRobot implements Sistema {
 		}
 
 		//////////////////// RECUERDA BORRAR ESTA PARTE
-		mostrarLista();
-		System.out.println("Tamaño = " + listaPiezas.size());
+		/**
+		 * mostrarLista(); System.out.println("Tamaño = " + listaPiezas.size());
+		 **/
 	}
 
 	private int generarDañoExtra(String tipoDePieza) {
@@ -170,9 +172,9 @@ public class SistemaRobot implements Sistema {
 		}
 	}
 
-	public void mostrarLista() {
-		System.out.println(listaPiezas.toString());
-	}
+	/**
+	 * private void mostrarLista() { System.out.println(listaPiezas.toString()); }
+	 **/
 
 	@Override
 	public void guardarRobot(String linea) {
@@ -286,7 +288,7 @@ public class SistemaRobot implements Sistema {
 
 		}
 
-		System.out.println(listaRobots.toString());
+		// System.out.println(listaRobots.toString());
 
 	}
 
@@ -619,8 +621,9 @@ public class SistemaRobot implements Sistema {
 			if (r.getNombre().equalsIgnoreCase(nombreRoboString)) {
 				for (int i = 0; i < r.getLista().getCantidad(); i++) {
 					if (!(r.getLista().getIndex(i) instanceof Arma)) {
-						if (r.getLista().getIndex(i).getClass() == buscarPieza.getClass()) {
-							System.out.println("NOMBRE PIEZA: " + r.getLista().getIndex(i).getNombre());
+						if (buscarPieza == null) {
+							break;
+						} else if (r.getLista().getIndex(i).getClass() == buscarPieza.getClass()) {
 							arma = r.getLista().getIndex(i).getNombre();
 						}
 
@@ -710,8 +713,8 @@ public class SistemaRobot implements Sistema {
 			}
 		}
 
-		double porcentaje = (humanos / totalRegistros) * 100;
-		double porcentajeAlie = (alien / totalRegistros) * 100;
+		double porcentaje = Math.round((humanos / totalRegistros) * 100);
+		double porcentajeAlie = Math.round((alien / totalRegistros) * 100);
 		return "Porcentaje de victorias: \nHumanos: " + porcentaje + "%\nAlien: " + porcentajeAlie + "%";
 	}
 
@@ -736,6 +739,80 @@ public class SistemaRobot implements Sistema {
 		}
 
 		return (alien == 3 && humao == 3);
+	}
+
+	@Override
+	public String iniciarSimulacion(String linea) {
+
+		Robot[] listaLucha = new Robot[6];
+		String[] robot = linea.split(",");
+
+		for (int i = 0; i < robot.length; i++) {
+			listaLucha[i] = verificarRobot(robot[i]);
+		}
+
+		int posicionMayor = 0;
+		int velocidadMayor = 0;
+
+		int vidaAlien = 0;
+		int vidaHumano = 0;
+
+		for (int i = 0; i < listaLucha.length; i++) {
+
+			if (listaLucha[i].getEstadisticas().getVelocidad() > velocidadMayor) {
+				velocidadMayor = listaLucha[i].getEstadisticas().getVelocidad();
+				posicionMayor = i;
+			}
+
+			if (listaLucha[i] instanceof RobotAlien) {
+				vidaAlien += listaLucha[i].getEstadisticas().getVida();
+			} else if (listaLucha[i] instanceof RobotHumano) {
+				vidaHumano += listaLucha[i].getEstadisticas().getVida();
+			}
+		}
+
+		if (listaLucha[posicionMayor] instanceof RobotAlien) {
+			vidaHumano -= (listaLucha[posicionMayor].getEstadisticas().getDaño()
+					+ listaLucha[posicionMayor].getEstadisticas().getAtaque());
+		} else if (listaLucha[posicionMayor] instanceof RobotHumano) {
+			vidaAlien -= (listaLucha[posicionMayor].getEstadisticas().getDaño()
+					+ listaLucha[posicionMayor].getEstadisticas().getAtaque());
+		}
+
+		while (vidaAlien > 0 && vidaHumano > 0) {
+
+			int posicion = (int) (Math.random() * 6);
+
+			if (listaLucha[posicion] instanceof RobotAlien) {
+				vidaHumano -= (listaLucha[posicionMayor].getEstadisticas().getDaño()
+						+ listaLucha[posicionMayor].getEstadisticas().getAtaque());
+			} else if (listaLucha[posicion] instanceof RobotHumano) {
+				vidaAlien -= (listaLucha[posicionMayor].getEstadisticas().getDaño()
+						+ listaLucha[posicionMayor].getEstadisticas().getAtaque());
+			}
+		}
+
+		if (vidaAlien > vidaHumano) {
+			String ganador = linea + ",A";
+			registroCombates.add(ganador);
+			return "Ganan los Aliens!";
+		} else {
+			String ganador = linea + ",H";
+			registroCombates.add(ganador);
+			return "Ganan los Humanos!";
+		}
+
+	}
+
+	@Override
+	public void guardarArchivos() throws IOException {
+
+		GuardarTxt guardar = new GuardarTxt();
+		guardar.guardarTxtArmas(listaPiezas);
+		guardar.guardarCombates(registroCombates);
+		guardar.guardarTxtPiezas(listaPiezas);
+		guardar.guardarRobots(listaRobots);
+
 	}
 
 	// CREAR UN METODO QUE DIGA SI EXISTE EL PILOTO Y DEVUELVA SU REFERENCIA

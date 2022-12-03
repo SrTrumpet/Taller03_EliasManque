@@ -12,6 +12,7 @@ import javax.swing.SwingConstants;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.awt.Color;
 import javax.swing.JButton;
 
@@ -119,7 +120,7 @@ public class Inicio extends JFrame implements ActionListener {
 
 		// Guardara todos los datos en un txt
 		salir = new JButton("Salir");
-		salir.setBackground(Color.RED);
+		salir.setBackground(new Color(255, 69, 0));
 		salir.setForeground(Color.DARK_GRAY);
 		salir.setFont(new Font("Tahoma", Font.BOLD, 14));
 		salir.setBounds(510, 350, 153, 32);
@@ -138,6 +139,13 @@ public class Inicio extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 
 		if (salir == e.getSource()) {
+			
+			try {
+				sist.guardarArchivos();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			
 			this.dispose();
 		}
 		if (simulacion == e.getSource()) {

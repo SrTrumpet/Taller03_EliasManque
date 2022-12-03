@@ -1,5 +1,7 @@
 package cl.ucn.taller03.logica;
 
+import java.io.IOException;
+
 public interface Sistema {
 
 	/***
@@ -137,4 +139,8 @@ public interface Sistema {
 	String generarPorcentajeVictorias();
 	
 	boolean verificarRobots(String linea);
+	
+	String iniciarSimulacion(String linea);
+	
+	void guardarArchivos() throws IOException;
 }

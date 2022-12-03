@@ -1,2 +1,6 @@
-SworDan,AvancePerpetuo,IronTorax,HerculesX-13,Pectorales de Saltamonte,CascoHuaso,A,SS+
-GurrenBox,GigaDrill,AvancePerpetuo,Brazo de Araña,IronTorax,CascoMinero,H,CapitanHalcon,SK33
+SworDan,CascoMinero,Pecho Frio,null,null,null,A,SS+
+GurrenBox,AvancePerpetuo,IronTorax,HerculesX-13,CascoHuaso,GigaDrill,H,CapitanHalcon,SK33
+WatesLocos,null,null,null,null,null,H,Perro,SK33
+Qua,null,null,null,null,null,H,Cas,SK33
+Elote,null,null,null,null,null,A,SS+
+Retro,null,null,null,null,null,A,SS+

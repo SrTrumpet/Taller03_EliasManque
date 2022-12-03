@@ -1,1 +1,3 @@
 GigaDrill,2500,200
+Pomarola,6000,10000
+Arto,900,8000

@@ -32,6 +32,9 @@ public class Simulacion extends JFrame implements ActionListener {
 	private JButton btnAtras;
 	private JLabel lblRobotAlien;
 	private JLabel lblRobotHumano;
+	private JLabel lblGanadorDynamic;
+	private JLabel lblGanador;
+
 	private Sistema sist;
 
 	/**
@@ -50,7 +53,7 @@ public class Simulacion extends JFrame implements ActionListener {
 		contentPane.setLayout(null);
 
 		iniciarComponentes();
-		
+
 		setLocationRelativeTo(null);// Deja centrada la ventana
 		setResizable(false);// No deja que se reescale la ventana para que la intefaz no cambie
 
@@ -120,27 +123,39 @@ public class Simulacion extends JFrame implements ActionListener {
 		btnIniciarSimulacion.setBounds(159, 293, 248, 39);
 		btnIniciarSimulacion.addActionListener(this);
 		contentPane.add(btnIniciarSimulacion);
+
+		lblGanador = new JLabel("Ganador: ");
+		lblGanador.setHorizontalAlignment(SwingConstants.CENTER);
+		lblGanador.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblGanador.setBounds(77, 342, 173, 39);
+		contentPane.add(lblGanador);
+
+		lblGanadorDynamic = new JLabel("");
+		lblGanadorDynamic.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblGanadorDynamic.setHorizontalAlignment(SwingConstants.CENTER);
+		lblGanadorDynamic.setBounds(206, 342, 201, 39);
+		contentPane.add(lblGanadorDynamic);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
+		String linea = textAlien1.getText() + "," + textAlien2.getText() + "," + textAlien3.getText() + ","
+				+ textHumano1.getText() + "," + textHumano2.getText() + "," + textHumano3.getText();
+		
 		if (btnAtras == e.getSource()) {
 			dispose();
 		}
 		if (btnVerificar == e.getSource()) {
 
 			boolean verificar = false;
-			String linea = textAlien1.getText() + "," + textAlien2.getText() + "," + textAlien3.getText() + ","
-					+ textHumano1.getText() + "," + textHumano2.getText() + "," + textHumano3.getText();
-			
 			verificar = sist.verificarRobots(linea);
-			
+
 			btnIniciarSimulacion.setEnabled(verificar);
 
 		}
 		if (btnIniciarSimulacion == e.getSource()) {
-
+			lblGanadorDynamic.setText(sist.iniciarSimulacion(linea));
 		}
 
 	}

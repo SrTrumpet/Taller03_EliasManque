@@ -3,3 +3,5 @@ GurrenBox,RoboCop,YubiYubi,Metoroido,Starlight,Gonzatron,A
 GurrenBox,RoboCop,YubiYubi,Metoroido,Starlight,Gonzatron,A
 GurrenBox,RoboCop,YubiYubi,Metoroido,Starlight,Gonzatron,A
 GurrenBox,RoboCop,YubiYubi,Metoroido,Starlight,Gonzatron,A
+SworDan,Elote,Retro,GurrenBox,WatesLocos,Qua,A
+SworDan,Elote,Retro,GurrenBox,WatesLocos,Qua,H
