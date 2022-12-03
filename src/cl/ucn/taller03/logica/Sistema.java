@@ -135,4 +135,6 @@ public interface Sistema {
 	String obtenerEstadisticas(String nombreRobot);
 
 	String generarPorcentajeVictorias();
+	
+	boolean verificarRobots(String linea);
 }

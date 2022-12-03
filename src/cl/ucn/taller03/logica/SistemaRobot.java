@@ -369,7 +369,7 @@ public class SistemaRobot implements Sistema {
 
 	private Robot verificarRobot(String nombre) {
 		for (Robot r : listaRobots) {
-			if (r.getNombre().equals(nombre)) {
+			if (r.getNombre().equalsIgnoreCase(nombre)) {
 				return r;
 			}
 		}
@@ -713,6 +713,29 @@ public class SistemaRobot implements Sistema {
 		double porcentaje = (humanos / totalRegistros) * 100;
 		double porcentajeAlie = (alien / totalRegistros) * 100;
 		return "Porcentaje de victorias: \nHumanos: " + porcentaje + "%\nAlien: " + porcentajeAlie + "%";
+	}
+
+	@Override
+	public boolean verificarRobots(String linea) {
+
+		String[] datos = linea.split(",");
+		int alien = 0;
+		int humao = 0;
+
+		for (int i = 0; i < datos.length; i++) {
+			Robot buscar = verificarRobot(datos[i]);
+			if (buscar == null) {
+				return false;
+			} else {
+				if (buscar instanceof RobotAlien) {
+					alien++;
+				} else if (buscar instanceof RobotHumano) {
+					humao++;
+				}
+			}
+		}
+
+		return (alien == 3 && humao == 3);
 	}
 
 	// CREAR UN METODO QUE DIGA SI EXISTE EL PILOTO Y DEVUELVA SU REFERENCIA

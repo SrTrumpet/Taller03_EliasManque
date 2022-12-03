@@ -20,12 +20,10 @@ public class Inicio extends JFrame implements ActionListener {
 
 	private JPanel contentPane;
 	private Sistema sist;
-	
+
 	private JButton salir, simulacion, victoriasPorLaHumanidad, robotPorEquipo, mostrarRobotPiloto, mostrarEstadisticas,
 			cambiarPiezaRobot, ensamblarRobot, opcionaAddPieza;
 	private JButton btnCambiarArma;
-	
-	
 
 	/**
 	 * Create the frame.
@@ -127,7 +125,7 @@ public class Inicio extends JFrame implements ActionListener {
 		salir.setBounds(510, 350, 153, 32);
 		salir.addActionListener(this);
 		contentPane.add(salir);
-		
+
 		btnCambiarArma = new JButton("Cambiar Arma");
 		btnCambiarArma.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnCambiarArma.setBounds(361, 179, 236, 32);
@@ -143,38 +141,38 @@ public class Inicio extends JFrame implements ActionListener {
 			this.dispose();
 		}
 		if (simulacion == e.getSource()) {
-
+			Simulacion simulacion = new Simulacion(sist);
+			simulacion.setVisible(true);
 		}
-		if(victoriasPorLaHumanidad == e.getSource()) {
+		if (victoriasPorLaHumanidad == e.getSource()) {
 			Victorias victorias = new Victorias(sist);
 			victorias.setVisible(true);
 		}
-		if(robotPorEquipo == e.getSource()) {
+		if (robotPorEquipo == e.getSource()) {
 			BuscarRobotPorEquipo buscadorEquipo = new BuscarRobotPorEquipo(sist);
 			buscadorEquipo.setVisible(true);
-			
 		}
-		if(mostrarRobotPiloto == e.getSource()) {
+		if (mostrarRobotPiloto == e.getSource()) {
 			BuscarRobotPorPiloto buscarPiloto = new BuscarRobotPorPiloto(sist);
 			buscarPiloto.setVisible(true);
 		}
-		if(mostrarEstadisticas == e.getSource()) {
+		if (mostrarEstadisticas == e.getSource()) {
 			Estadistica estadistica = new Estadistica(sist);
 			estadistica.setVisible(true);
 		}
-		if(cambiarPiezaRobot == e.getSource()) {
+		if (cambiarPiezaRobot == e.getSource()) {
 			CambiarPieza cambiarPieza = new CambiarPieza(sist);
 			cambiarPieza.setVisible(true);
 		}
-		if(ensamblarRobot == e.getSource()) {
+		if (ensamblarRobot == e.getSource()) {
 			EnsamblarRobot ensamblar = new EnsamblarRobot(sist);
 			ensamblar.setVisible(true);
 		}
-		if(opcionaAddPieza == e.getSource()) {
+		if (opcionaAddPieza == e.getSource()) {
 			CrearPieza addPiezas = new CrearPieza(sist);
 			addPiezas.setVisible(true);
 		}
-		if(btnCambiarArma == e.getSource()) {
+		if (btnCambiarArma == e.getSource()) {
 			CambiarArmas cambiarArma = new CambiarArmas(sist);
 			cambiarArma.setVisible(true);
 		}
